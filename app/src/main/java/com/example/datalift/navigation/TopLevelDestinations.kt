@@ -3,7 +3,7 @@ package com.example.datalift.navigation
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.datalift.R
-import com.example.datalift.ui.components.DataliftIcons
+import com.datalift.designsystem.icon.DataliftIcons
 import kotlin.reflect.KClass
 
 

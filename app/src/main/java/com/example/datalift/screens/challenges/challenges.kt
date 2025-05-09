@@ -53,7 +53,7 @@ import com.example.datalift.model.testChallenge
 import com.example.datalift.navigation.getCurrentUserId
 import com.example.datalift.screens.profile.LoadingIcon
 import com.example.datalift.ui.DevicePreviews
-import com.example.datalift.ui.components.DataliftIcons
+import com.datalift.designsystem.icon.DataliftIcons
 import com.google.firebase.Timestamp
 import java.time.Duration
 import java.util.Locale

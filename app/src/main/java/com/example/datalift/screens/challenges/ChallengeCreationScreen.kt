@@ -41,7 +41,7 @@ import com.example.datalift.model.Mgoal
 import com.example.datalift.model.Muser
 import com.example.datalift.screens.profile.GoalCreationDialog
 import com.example.datalift.ui.DevicePreviews
-import com.example.datalift.ui.components.DataliftIcons
+import com.datalift.designsystem.icon.DataliftIcons
 import com.example.datalift.ui.components.DateRangePickerModal
 import com.example.datalift.ui.components.StatelessDataliftCloseCardDialog
 import com.example.datalift.ui.components.StatelessDataliftFormTextField

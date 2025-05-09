@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
@@ -36,7 +35,7 @@ import com.example.datalift.model.Mpost
 import com.example.datalift.model.testPost
 import com.example.datalift.model.testPostList
 import com.example.datalift.ui.DevicePreviews
-import com.example.datalift.ui.components.DataliftIcons
+import com.datalift.designsystem.icon.DataliftIcons
 import com.google.firebase.Timestamp
 import java.util.Locale
 

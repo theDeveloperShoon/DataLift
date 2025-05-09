@@ -1,4 +1,4 @@
-package com.example.datalift.ui.components
+package com.datalift.designsystem.icon
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
