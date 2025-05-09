@@ -6,11 +6,13 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.EmojiEvents
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 
@@ -28,4 +30,6 @@ object DataliftIcons {
     val TrophyOutlined = Icons.Outlined.EmojiEvents
     val PersonAdd = Icons.Filled.PersonAdd
     val PersonCheck = Icons.Filled.CheckCircle
+    val Heart = Icons.Filled.Favorite
+    val HeartBorder = Icons.Outlined.FavoriteBorder
 }

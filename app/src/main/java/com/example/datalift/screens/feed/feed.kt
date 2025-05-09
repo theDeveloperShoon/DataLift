@@ -19,6 +19,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +36,7 @@ import com.example.datalift.model.Mpost
 import com.example.datalift.model.testPost
 import com.example.datalift.model.testPostList
 import com.example.datalift.ui.DevicePreviews
+import com.example.datalift.ui.components.DataliftIcons
 import com.google.firebase.Timestamp
 import java.util.Locale
 
@@ -42,8 +47,10 @@ fun PostScreen(
     navUp: () -> Unit = {},
     navigateToProfile: (String) -> Unit = {},
     isImperial: Boolean,
-    addLike: (Mpost) -> Unit
+    addLike: (Mpost) -> Unit,
+    currentlyLiked: Boolean,
 ) {
+    var liked by remember { mutableStateOf(currentlyLiked) }
     Column {
         Row(modifier = modifier.fillMaxWidth()) {
             IconButton(onClick = navUp) {
@@ -92,9 +99,16 @@ fun PostScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = { addLike(post) }) {
+                    IconButton(
+                        onClick = {
+                            if(!liked){
+                                addLike(post)
+                                liked = true
+                            }
+                          },
+                    ) {
                         Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
+                            imageVector = if(liked) DataliftIcons.Heart else DataliftIcons.HeartBorder,
                             contentDescription = null
                         )
                     }
@@ -164,8 +178,10 @@ fun PostCard(
     navigateToProfile: (String) -> Unit,
     post: Mpost,
     addLike: (Mpost) -> Unit,
+    currentlyLiked: Boolean,
     modifier: Modifier = Modifier,
 ){
+    var liked by remember {mutableStateOf(currentlyLiked)}
     Card(
         onClick = { navigateToPost(post.docID, post.poster?.uid!!) },
         modifier = modifier
@@ -202,9 +218,16 @@ fun PostCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = {addLike(post)}) {
+                IconButton(
+                    onClick = {
+                        if(!liked){
+                            addLike(post)
+                            liked = true
+                        }
+                      },
+                ) {
                     Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
+                        imageVector = if(liked) DataliftIcons.Heart else DataliftIcons.HeartBorder,
                         contentDescription = null
                     )
                 }
@@ -251,7 +274,8 @@ fun FeedScreen(
         posts = posts,
         navigateToPost = navigateToPost,
         navigateToProfile = navigateToProfile,
-        addLike = feedViewModel::addLike
+        addLike = feedViewModel::addLike,
+        currentlyLiked = feedViewModel::currentlyLiked
     )
 }
 
@@ -260,7 +284,8 @@ internal fun FeedScreen(
     posts: List<Mpost>,
     navigateToPost: (String, String) -> Unit,
     navigateToProfile: (String) -> Unit = {},
-    addLike: (Mpost) -> Unit
+    addLike: (Mpost) -> Unit,
+    currentlyLiked: (Mpost) -> Boolean = { true },
 ){
 //    Text("Feed Screen placeholder")
     LazyColumn(
@@ -272,6 +297,7 @@ internal fun FeedScreen(
                 post = post,
                 navigateToProfile = navigateToProfile,
                 addLike = addLike,
+                currentlyLiked = currentlyLiked(post),
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             )
@@ -302,7 +328,7 @@ fun PostPreview(){
     DataliftTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             val post = testPost()
-            PostScreen(post = post, isImperial = false, addLike = {})
+            PostScreen(post = post, isImperial = false, addLike = {}, currentlyLiked = false)
         }
     }
 }

@@ -54,6 +54,13 @@ class FeedViewModel @Inject constructor(
         }
     }
 
+    fun currentlyLiked(post: Mpost): Boolean{
+        val updatedPosts = _posts.value.toMutableList()
+        val index = updatedPosts.indexOfFirst { it.docID == post.docID }
+
+        return !(index != -1 && !post.likes.contains(uid))
+    }
+
         fun removeLike(post: Mpost) {
             postRepo.removeLike(uid, post)
         }
