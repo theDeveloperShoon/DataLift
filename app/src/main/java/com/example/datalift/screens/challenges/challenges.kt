@@ -28,7 +28,6 @@ import androidx.compose.material3.ProgressIndicatorDefaults.drawStopIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +49,7 @@ import com.example.datalift.model.Mgoal
 import com.example.datalift.model.Muser
 import com.example.datalift.model.smallTestChallenge
 import com.example.datalift.model.testChallenge
+import com.example.datalift.navigation.getCurrentUserId
 import com.example.datalift.screens.profile.LoadingIcon
 import com.example.datalift.ui.DevicePreviews
 import com.example.datalift.ui.components.DataliftIcons
@@ -460,10 +460,10 @@ fun ChallengesScreen(
     navigateToChallenge: (String) -> Unit = { _ -> },
     navigateToChallengeCreation: () -> Unit,
 ){
-    val uiState by challengesViewModel.uiState.collectAsStateWithLifecycle()
+    val uiState = challengesViewModel.uiState.collectAsStateWithLifecycle()
 
     ChallengesScreen(
-        uiState = uiState,
+        uiState = uiState.value,
         navigateToChallenge = navigateToChallenge,
         navigateToChallengeCreation = navigateToChallengeCreation
     )
@@ -499,7 +499,7 @@ internal fun ChallengesScreen(
                 is ChallengesUiState.Success -> items(uiState.challenges) { challenge ->
                     ChallengeCard(
                         navigateToChallenge = navigateToChallenge,
-                        currentUser = "999",
+                        currentUser = getCurrentUserId(),
                         challenge = challenge,
                         modifier = Modifier.padding(8.dp)
                     )
@@ -524,7 +524,7 @@ internal fun ChallengesScreen(
 
 @Composable
 fun ChallengeDetailScreen(
-    challenge: Mchallenge,
+    challenge: Mchallenge?,
     currentUser: String,
     navigateUp: () -> Unit,
     error: Boolean,
@@ -538,7 +538,7 @@ fun ChallengeDetailScreen(
                 )
             }
             Text(
-                text = challenge.title,
+                text = challenge?.title ?: "Challenge",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -550,7 +550,7 @@ fun ChallengeDetailScreen(
             modifier = Modifier.padding(top = 8.dp),
             thickness = 1.dp
         )
-        if (error){
+        if (error || challenge == null){
             Text("An error has occurred whilst trying to load this screen")
         } else {
             Column(modifier = Modifier.fillMaxWidth()) {
