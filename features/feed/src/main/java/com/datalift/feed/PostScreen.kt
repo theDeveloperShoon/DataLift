@@ -111,8 +111,6 @@ internal fun PostScreen(
                     isLiked = post.isLiked,
                     onToggleLike = {
                         toggleLike(post.postId,!post.isLiked)
-                        // TODO: MIGHT NEED TO MODIFY isLiked to a var
-                        // TODO: TO MODIFY THE Like Status
                     },
                 )
 
