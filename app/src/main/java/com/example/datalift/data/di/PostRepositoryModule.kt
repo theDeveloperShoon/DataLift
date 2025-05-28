@@ -1,6 +1,6 @@
 package com.example.datalift.data.di
 
-import com.example.datalift.data.repository.PostRepository
+import com.example.datalift.data.repository.PostRepositoryTwo
 import com.example.datalift.model.PostRepo
 import dagger.Binds
 import dagger.Module
@@ -13,5 +13,5 @@ abstract class PostRepositoryModule {
     @Binds
     abstract fun bindPostRepository(
         postRepo: PostRepo
-    ) : PostRepository
+    ) : PostRepositoryTwo
 }

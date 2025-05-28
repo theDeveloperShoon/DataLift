@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.datalift.data.repository.PostRepository
+import com.example.datalift.data.repository.PostRepositoryTwo
 import com.example.datalift.data.repository.WorkoutRepository
 
 //data models
@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkoutViewModel @Inject constructor(
     private val userRepo: userRepo,
-    private val postRepo: PostRepository,
+    private val postRepo: PostRepositoryTwo,
     private val workoutRepo: WorkoutRepository
 ) : ViewModel() {
 

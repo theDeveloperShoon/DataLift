@@ -1,7 +1,7 @@
 package com.example.datalift.model
 
 import android.util.Log
-import com.example.datalift.data.repository.PostRepository
+import com.example.datalift.data.repository.PostRepositoryTwo
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FieldValue
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class PostRepo @Inject constructor(
     private val userRepo: userRepo
-): PostRepository {
+): PostRepositoryTwo {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val posts : MutableList<Mpost> = emptyList<Mpost>().toMutableList()

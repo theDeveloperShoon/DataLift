@@ -83,11 +83,12 @@ fun <A : ComponentActivity> AndroidComposeTestRule<ActivityScenarioRule<A>, A>.c
 
                 this.onRoot()
                     .captureRoboImage(
-                        "src/test/screenshots/" +
-                        "_$darkModeDesc" +
-                        "_$androidThemeDesc" +
-                        "_$dynamicThemingDesc" +
-                        ".png",
+                "src/test/screenshots/" +
+                            "$name/$filename"+
+                            "_$darkModeDesc" +
+                            "_$androidThemeDesc" +
+                            "_$dynamicThemingDesc" +
+                            ".png",
                         roborazziOptions = DefaultRoborazziOptions,
                     )
             }

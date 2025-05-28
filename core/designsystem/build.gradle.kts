@@ -16,6 +16,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    api(libs.androidx.material3)
     implementation(libs.androidx.material.compose.iconsExtended)
     implementation(libs.material)
     implementation(libs.androidx.material3.android)

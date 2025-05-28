@@ -72,16 +72,16 @@ dependencies {
 //    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.1.1")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
 
     // Navigation
-    implementation(libs.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.navigation.fragment)
 
     // Serialization

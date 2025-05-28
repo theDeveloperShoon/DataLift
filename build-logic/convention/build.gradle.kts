@@ -53,6 +53,10 @@ gradlePlugin{
             id = libs.plugins.datalift.android.library.asProvider().get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidFeature") {
+            id = libs.plugins.datalift.android.feature.get().pluginId
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
         register("hilt") {
             id = libs.plugins.datalift.hilt.get().pluginId
             implementationClass = "HiltConventionPlugin"
@@ -60,6 +64,10 @@ gradlePlugin{
         register("androidFlavors"){
             id = libs.plugins.datalift.android.application.flavors.get().pluginId
             implementationClass = "AndroidApplicationFlavorsConventionPlugin"
+        }
+        register("jvmLibrary"){
+            id = libs.plugins.datalift.jvm.library.get().pluginId
+            implementationClass = "JvmLibraryConventionPlugin"
         }
     }
 }

@@ -4,8 +4,11 @@ import androidx.compose.ui.graphics.Color
 
 internal val Blue20 = Color(0xFF003544)
 internal val Blue40 = Color(0xFF006780)
+internal val Cyan40 = Color(0xFF00A0AE)
+internal val Cyan60 = Color(0xFF00C8DC)
 internal val DarkGreenGray95 = Color(0xFFF0F1EC)
 internal val Orange40 = Color(0xFFA23F16)
+internal val Orange60 = Color(0xFFF58200)
 internal val Orange80 = Color(0xFFFFB59B)
 internal val Pink40 = Color(0xFF7D5260)
 internal val Pink80 = Color(0xFFEFB8C8)
@@ -16,6 +19,6 @@ internal val PurpleGrey40 = Color(0xFF625b71)
 internal val PurpleGrey60 = Color(0xFF998D96)
 internal val PurpleGrey80 = Color(0xFFCCC2DC)
 internal val PurpleGrey90 = Color(0xFFEDDEE8)
-
+internal val Red60 = Color(0xFFFF5449)
 
 

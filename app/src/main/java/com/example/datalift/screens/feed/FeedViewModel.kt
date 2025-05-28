@@ -1,7 +1,7 @@
 package com.example.datalift.screens.feed
 
 import androidx.lifecycle.ViewModel
-import com.example.datalift.data.repository.PostRepository
+import com.example.datalift.data.repository.PostRepositoryTwo
 import com.example.datalift.model.Mpost
 import com.example.datalift.model.userRepo
 import com.google.firebase.auth.FirebaseAuth
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
-    private val postRepo: PostRepository,
+    private val postRepo: PostRepositoryTwo,
     private val userRepo: userRepo
 ): ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth

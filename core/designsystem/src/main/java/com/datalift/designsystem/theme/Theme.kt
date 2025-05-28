@@ -18,18 +18,20 @@ import androidx.compose.ui.unit.dp
 
 @VisibleForTesting
 val DarkDefaultColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = Orange80,
-    tertiary = Blue20,
+    primary = Cyan60,
+    secondary = Cyan40,
+    tertiary = Orange60,
+    error = Red60
 )
 
 @VisibleForTesting
 val LightDefaultColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Blue40,
-    surfaceVariant = PurpleGrey90,
-    onSurfaceVariant = PurpleGrey60,
+    primary = Cyan60,
+    secondary = Cyan40,
+    tertiary = Orange60,
+    error = Red60
+//    surfaceVariant = PurpleGrey90,
+//    onSurfaceVariant = PurpleGrey60,
 )
 
 @VisibleForTesting
