@@ -89,7 +89,7 @@ internal fun PostScreen(
                     contentAlignment = Alignment.Center,
                 ){
                     Text(
-                        text = stringResource(R.string.post_ui_error_message),
+                        text = stringResource(R.string.features_feed_post_ui_error_message),
                         modifier = Modifier.padding(8.dp)
                     )
                 }
