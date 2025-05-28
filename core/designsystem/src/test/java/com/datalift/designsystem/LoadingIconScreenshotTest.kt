@@ -27,7 +27,7 @@ class LoadingIconScreenshotTest {
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun loadingIcon_mutlipleThemes() {
+    fun loadingIcon_multipleThemes() {
         composeTestRule.captureMultiTheme("LoadingIcon"){
             Surface {
                 DataliftLoadingIcon(contentDesc = "test")
