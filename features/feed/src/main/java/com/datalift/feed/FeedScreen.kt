@@ -2,6 +2,7 @@ package com.datalift.feed
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -34,7 +35,6 @@ internal fun FeedScreen(
         onPostCheckedChange = viewModel::updateLikedStatus,
         modifier = modifier
     )
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +52,12 @@ internal fun FeedScreen(
         onRefresh = onRefresh,
         modifier = modifier
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        val state = rememberLazyListState()
+
+        LazyColumn(
+            state = state,
+            modifier = Modifier.fillMaxSize()
+        ) {
             postFeed(
                 feedState = uiState,
                 onPostClick = onPostClick,
