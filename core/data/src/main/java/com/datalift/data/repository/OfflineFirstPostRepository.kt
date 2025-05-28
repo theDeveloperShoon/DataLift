@@ -20,7 +20,9 @@ class OfflineFirstPostRepository @Inject constructor(
         )
 
     override suspend fun updatePostLikedStatus(postId: String, isLiked: Boolean) {
-
-        TODO("Not yet implemented")
+        postServiceImpl.updatePostLikedStatus(
+            postId = postId,
+            isLiked = isLiked
+        )
     }
 }
