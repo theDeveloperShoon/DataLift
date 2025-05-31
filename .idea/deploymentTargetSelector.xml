@@ -16,6 +16,9 @@
       <SelectionState runConfigName="FeedScreenPopulatedRefreshing - phone (postList 0)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="features.logging">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
