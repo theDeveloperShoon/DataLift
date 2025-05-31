@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.datalift.android.feature)
     alias(libs.plugins.datalift.android.library.compose)
+    alias(libs.plugins.datalift.android.library.jacoco)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -10,8 +12,12 @@ android {
 dependencies {
     implementation(projects.core.data)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.robolectric)
+    testImplementation(projects.core.testing)
+    testDemoImplementation(projects.core.screenshotTesting)
 
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
+//    androidTestImplementation(libs.androidx.junit)
+//    androidTestImplementation(libs.androidx.espresso.core)
 }
