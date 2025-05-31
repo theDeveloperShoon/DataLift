@@ -23,3 +23,6 @@ data class Post internal constructor(
         isLiked = userData.userID in postResource.usersLiked
     )
 }
+
+fun List<PostResource>.mapToPost(userData: UserData): List<Post> =
+    map { Post(it, userData) }
