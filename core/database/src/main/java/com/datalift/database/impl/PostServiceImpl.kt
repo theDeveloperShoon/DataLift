@@ -4,6 +4,7 @@ import android.util.Log
 import com.datalift.database.service.AccountService
 import com.datalift.database.service.PostService
 import com.datalift.model.data.Post
+import com.datalift.model.data.PostResource
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -23,7 +24,7 @@ class PostServiceImpl @Inject constructor(
 ): PostService {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getFeedForUser(userId: String): Flow<List<Post>> {
+    override fun getFeedForUser(userId: String): Flow<List<PostResource>> {
         auth.user.flatMapLatest { user ->
             val userSnapshot = firestore
                 .collection("users")
@@ -36,7 +37,7 @@ class PostServiceImpl @Inject constructor(
             if(followingField is List<*> && followingField.all { it is String }){
                 @Suppress("UNCHECKED_CAST")
                 val following = followingField as List<String>
-                val posts: MutableList<Post> = mutableListOf()
+                val posts: MutableList<PostResource> = mutableListOf()
 
                 following.forEach { userId ->
                     firestore.collection("posts")
@@ -44,7 +45,7 @@ class PostServiceImpl @Inject constructor(
                         .get()
                         .addOnSuccessListener { documents ->
                             for(document in documents){
-                                val post = document.toObject<Post>()
+                                val post = document.toObject<PostResource>()
                                 posts.add(post)
                             }
                         }.addOnFailureListener { exception ->
