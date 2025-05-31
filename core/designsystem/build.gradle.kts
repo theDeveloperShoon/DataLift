@@ -24,7 +24,6 @@ dependencies {
     api(libs.androidx.compose.runtime.android)
     implementation(libs.androidx.ui.tooling.preview.android)
 
-//    testImplementation(libs.junit)
     testImplementation(libs.androidx.compose.ui.test)
     testImplementation(libs.androidx.compose.ui.testManifest)
 
