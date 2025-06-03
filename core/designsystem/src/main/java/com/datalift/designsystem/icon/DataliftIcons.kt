@@ -4,13 +4,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -21,8 +24,11 @@ import androidx.compose.material.icons.outlined.Search
 object DataliftIcons {
     val Add = Icons.Default.Add
     val Calendar = Icons.Default.CalendarMonth
+    val Checked = Icons.Filled.Check
+    val Close = Icons.Default.Close
     val Edit = Icons.Default.Edit
     val EditBorder = Icons.Outlined.Edit
+    val ExpandMore = Icons.Outlined.ChevronRight
     val Home = Icons.Default.Home
     val HomeBorder = Icons.Outlined.Home
     val Heart = Icons.Filled.Favorite
@@ -32,6 +38,7 @@ object DataliftIcons {
     val NavigateUp = Icons.AutoMirrored.Filled.ArrowBack
     val PersonAdd = Icons.Filled.PersonAdd
     val PersonCheck = Icons.Filled.CheckCircle
+    val Search = Icons.Filled.Search
     val Trophy = Icons.Filled.EmojiEvents
     val TrophyOutlined = Icons.Outlined.EmojiEvents
 }
