@@ -15,6 +15,20 @@ data class Exercise(
     val bodyPart: String,
     val sets: List<ExerciseSet>,
 ){
+    constructor(exerciseResource: ExerciseResource) : this(
+        name = exerciseResource.title,
+        bodyPart = exerciseResource.bodyPart,
+        sets = emptyList()
+    )
+    constructor(
+        exerciseResource: ExerciseResource,
+        sets: List<ExerciseSet>
+    ) : this(
+        name = exerciseResource.title,
+        bodyPart = exerciseResource.bodyPart,
+        sets = sets
+    )
+
     fun getSetsCount() : Int = sets.size
     fun getRepsCount() : Long = sets.sumOf { it.reps }
 }
