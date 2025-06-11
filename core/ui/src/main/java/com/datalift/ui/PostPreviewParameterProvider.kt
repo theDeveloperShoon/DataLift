@@ -2,6 +2,7 @@ package com.datalift.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.datalift.model.data.Exercise
+import com.datalift.model.data.ExerciseResource
 import com.datalift.model.data.ExerciseSet
 import com.datalift.model.data.MuscleGroup
 import com.datalift.model.data.Post
@@ -208,6 +209,24 @@ object PreviewParameterData {
                     )
                 )
             )
+        )
+    )
+
+    val exerciseResources = listOf(
+        ExerciseResource(
+            title = "Push-ups"
+        ),
+        ExerciseResource(
+            title = "Pull-ups"
+        ),
+        ExerciseResource(
+            title = "Squats"
+        ),
+        ExerciseResource(
+            title = "Bench Press"
+        ),
+        ExerciseResource(
+            title = "Incline Bench Press"
         )
     )
 }
