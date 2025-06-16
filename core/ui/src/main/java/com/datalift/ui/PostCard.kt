@@ -62,7 +62,7 @@ fun PostCard(
 }
 
 @Composable
-fun dateFormatted(publishTime: Instant): String = DateTimeFormatter
+private fun dateFormatted(publishTime: Instant): String = DateTimeFormatter
     .ofPattern("MMMM dd, yyyy 'at' HH:mm a")
     .withLocale(Locale.getDefault())
     .withZone(LocalTimeZone.current.toJavaZoneId())
