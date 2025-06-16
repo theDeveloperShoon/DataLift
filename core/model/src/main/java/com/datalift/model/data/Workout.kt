@@ -16,4 +16,9 @@ data class Workout internal constructor(
         muscleGroups = workoutResource.muscleGroups.mapNotNull { MuscleGroup.fromDisplayName(it) },
         exercises = workoutResource.exercises
     )
+
+    fun getExerciseCount(): Int = exercises.size
 }
+
+fun List<WorkoutResource>.mapToWorkout(): List<Workout> =
+    map { Workout(it) }
