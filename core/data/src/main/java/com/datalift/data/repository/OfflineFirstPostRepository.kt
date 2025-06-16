@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class OfflineFirstPostRepository @Inject constructor(
-    private val userRepository: CompositeUserRepository,
+    private val userRepository: UserRepository,
     private val postServiceImpl: PostService
 ) : PostRepository {
     override fun getPostsResources(): Flow<List<Post>> =
