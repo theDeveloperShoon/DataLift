@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,11 +29,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.datalift.designsystem.components.DataliftNumberPicker
 import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.designsystem.theme.DataliftTheme
 import com.datalift.model.data.ExerciseSet
 import com.datalift.model.data.Workout
+import com.datalift.ui.VerticalNumberPicker
 import com.datalift.ui.WorkoutPreviewParameterProvider
 
 /*
@@ -55,6 +58,8 @@ internal fun AddExerciseScreen(
     navBack: () -> Unit,
     saveExercise: () -> Unit,
     addSet: () -> Unit,
+    updateSetWeight: (Int) -> Unit,
+    updateSetWeightDecimal: (Int) -> Unit,
     removeSet: (ExerciseSet) -> Unit,
     sets: List<ExerciseSet>,
 ){
@@ -92,7 +97,9 @@ internal fun AddExerciseScreen(
             SetsList(
                 addSet = addSet,
                 removeSet = removeSet,
-                sets = sets
+                sets = sets,
+                updateSetWeight = updateSetWeight,
+                updateSetWeightDecimal = updateSetWeightDecimal
             )
         }
     }
@@ -101,6 +108,8 @@ internal fun AddExerciseScreen(
 @Composable
 private fun SetsList(
     addSet: () -> Unit,
+    updateSetWeight: (Int) -> Unit,
+    updateSetWeightDecimal: (Int) -> Unit,
     removeSet: (ExerciseSet) -> Unit,
     sets: List<ExerciseSet>,
 ){
@@ -110,15 +119,18 @@ private fun SetsList(
         itemsIndexed(sets) { index ,set ->
             CollapsableSet(
                 collapsed = selectedSetIndex != index,
-                setCollapsed = {collapsed ->
-                    (if(collapsed) null else index).also {
+                setCollapsed = { collapsed ->
+                    (if (collapsed) null else index).also {
                         selectedSetIndex = it
                     }
                 },
-                setNumber = index+1,
+                setNumber = index + 1,
                 reps = set.reps,
                 changeReps = {},
                 deleteSet = { removeSet(set) },
+                weightString = set.weight.toString(),
+                changeWeightWhole = updateSetWeight,
+                changeWeightDecimal = updateSetWeightDecimal,
             )
         }
         item {
@@ -147,13 +159,18 @@ private fun CollapsableSet(
     setNumber: Int,
     reps: Long,
     changeReps: (Long) -> Unit,
+    weightString: String,
+    changeWeightWhole: (Int) -> Unit,
+    changeWeightDecimal: (Int) -> Unit,
     deleteSet: () -> Unit
 ){
+    var weightCollapsed by remember { mutableStateOf(true) }
 
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .clickable {
                     setCollapsed(!collapsed)
                 },
@@ -188,18 +205,50 @@ private fun CollapsableSet(
                     onValueChange = changeReps,
                     modifier = Modifier.padding(top = 2.dp)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Weight (lbs)",
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                // TODO: Change from hardcoded value to a variable
-                // TODO: Add weight picker
-                DataliftNumberPicker(
-                    value = 10,
-                    onValueChange = {},
-                    modifier = Modifier.padding(top = 2.dp)
-                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Weight",
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    TextButton (
+                        onClick = { weightCollapsed = !weightCollapsed },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = weightString,
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                    }
+                }
+
+                if(!weightCollapsed){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        VerticalNumberPicker(
+                            modifier = Modifier.weight(1f),
+                            values = List(500) { it },
+                            onValueChange = changeWeightWhole
+                        )
+                        Text(
+                            text =".",
+                            fontSize = 48.sp
+                        )
+                        VerticalNumberPicker(
+                            values = List(10) { it },
+                            onValueChange = changeWeightDecimal,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "lbs",
+                            fontSize = 48.sp
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -228,6 +277,9 @@ private fun CollapsableSetPreview(){
             reps = 10,
             changeReps = {},
             deleteSet = {},
+            weightString = "100.0 lbs",
+            changeWeightDecimal = {},
+            changeWeightWhole = {}
         )
     }
 }
@@ -243,6 +295,8 @@ private fun SetsListPreview(
             sets = workouts[0].exercises[0].sets,
             addSet = {},
             removeSet = {},
+            updateSetWeight = {},
+            updateSetWeightDecimal = {},
         )
     }
 }
@@ -260,7 +314,9 @@ private fun AddExerciseScreenPreview(
             addSet = {},
             removeSet = {},
             sets = workouts[0].exercises[0].sets,
-            saveExercise = {}
+            saveExercise = {},
+            updateSetWeight = {},
+            updateSetWeightDecimal = {}
         )
     }
 }
