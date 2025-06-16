@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
@@ -43,6 +44,7 @@ object DataliftIcons {
     val Increase = Icons.Default.Add
     val Magnifier = Icons.Default.Search
     val MagnifierBorder = Icons.Outlined.Search
+    val More = Icons.Default.MoreVert
     val NavigateUp = Icons.AutoMirrored.Filled.ArrowBack
     val PersonAdd = Icons.Filled.PersonAdd
     val PersonCheck = Icons.Filled.CheckCircle
