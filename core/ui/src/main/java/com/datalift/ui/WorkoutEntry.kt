@@ -46,7 +46,7 @@ fun WorkoutEntry(
                 onClick = { onWorkoutClick() }
             )
     ) {
-        // TODO: Add a Icon Box to signify what type of day it was
+        // TODO: Add a Icon Box to signify what type of workout it was
         Column(modifier = Modifier.weight(1f)) {
             WorkoutEntryTitle(workout.workoutName)
             WorkoutDateAndExercises(
