@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.datalift.data.repository.OfflineFirstPostRepository
+import com.datalift.data.repository.PostRepository
 import com.datalift.ui.FeedUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
-    private val postRepository: OfflineFirstPostRepository
+    private val postRepository: PostRepository
 ) : ViewModel() {
 
     private val refreshTrigger = MutableSharedFlow<Unit>(replay = 0)
