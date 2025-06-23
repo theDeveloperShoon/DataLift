@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.datalift.data.repository.ChallengeRepository
 import com.example.datalift.data.repository.GoalRepository
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.model.ChallengeProgress
 import com.example.datalift.model.ExerciseItem
 import com.example.datalift.model.Mchallenge
@@ -38,7 +38,7 @@ class ChallengeCreationViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val userRepo: userRepo,
     private val challengeRepo: ChallengeRepository,
-    private val workoutRepo: WorkoutRepository,
+    private val workoutRepo: WorkoutRepository2,
     private val goalRepo: GoalRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ChallengeCreationUiState())
