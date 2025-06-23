@@ -212,9 +212,9 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-    fun updateSelectedGoalType(goalType: GoalType) {
-        _selectedGoalType.value = goalType
-    }
+//    fun updateSelectedGoalType(goalType: GoalType) {
+//        _selectedGoalType.value = goalType
+//    }
 
 
 //    fun getUser() : MutableStateFlow<Muser?> {

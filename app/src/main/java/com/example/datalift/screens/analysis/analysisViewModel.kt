@@ -44,9 +44,6 @@ class analysisViewModel @Inject constructor(
     private val _exercises = MutableStateFlow<List<ExerciseItem>>(emptyList())
     val exercises: StateFlow<List<ExerciseItem>> get() = _exercises
 
-    private val _exerciseFetched = MutableStateFlow(false)
-    val exerciseFetched: StateFlow<Boolean> get() = _exerciseFetched
-
     private val _exercise = MutableStateFlow<String>("")
     val exercise: StateFlow<String> get() = _exercise
 
@@ -120,7 +117,7 @@ class analysisViewModel @Inject constructor(
     }
 
     fun updateExercise(string: String){
-        _chartExercise.value = string;
+        _chartExercise.value = string
     }
 
     fun updateQuery(newQuery: String){

@@ -1,16 +1,14 @@
 package com.example.datalift.model
 
 import android.util.Log
-import com.example.datalift.data.repository.PostRepositoryTwo
-import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.data.repository.AnalysisRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 
 class WorkoutRepo @Inject constructor(
-    private val postRepo: PostRepositoryTwo,
     private val analysisRepo: AnalysisRepository,
     private val challengeRepo: challengeRepo
 ) : WorkoutRepository2 {
@@ -114,7 +112,7 @@ class WorkoutRepo @Inject constructor(
             .addOnSuccessListener {
                 // After successfully updating the workout, analyze the workouts
                 analysisRepo.analyzeWorkouts(uid, onComplete = {
-                    var workouts : List<Mworkout> = emptyList()
+//                    var workouts : List<Mworkout> = emptyList()
                     getWorkouts(uid){ workoutList ->
                         challengeRepo.evaluateChallenges(uid, workoutList) {}
                     }
