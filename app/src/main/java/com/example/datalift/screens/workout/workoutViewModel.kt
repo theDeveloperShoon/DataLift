@@ -140,11 +140,6 @@ class WorkoutViewModel @Inject constructor(
     private val _workoutsFetched = MutableStateFlow(false)
     val workoutsFetched: StateFlow<Boolean> get() = _workoutsFetched
 
-    private val _user = MutableStateFlow<Muser?>(null)
-
-    private val _users = MutableStateFlow<List<Muser>>(emptyList())
-
-
 
     private val repRegex = Regex("^[0-9]*$")
     private val weightRegex = Regex("^[0-9]*[.]?[0-9]?$")
@@ -156,9 +151,6 @@ class WorkoutViewModel @Inject constructor(
 
     var title by mutableStateOf("")
     var body by mutableStateOf("")
-
-    var titleInvalid by mutableStateOf(false)
-    var bodyInvalid by mutableStateOf(false)
 
     var addPost by mutableStateOf(false)
 
@@ -200,11 +192,6 @@ class WorkoutViewModel @Inject constructor(
     }
 
 
-
-    fun addSet(exercise: Mexercise, set: Mset) {
-
-    }
-
     fun passWorkout(workout: Mworkout){
         _workout.value = workout
     }
@@ -214,13 +201,13 @@ class WorkoutViewModel @Inject constructor(
     }
 
 
-    fun getWorkoutList() = List(size = 10) {
-        i -> Mworkout("Workout #$i",
-        date = Timestamp.now(),
-        "Back",
-        "temp$i",
-        emptyList())
-    }
+//    fun getWorkoutList() = List(size = 10) {
+//        i -> Mworkout("Workout #$i",
+//        date = Timestamp.now(),
+//        "Back",
+//        "temp$i",
+//        emptyList())
+//    }
 
 
     /**
@@ -340,7 +327,7 @@ class WorkoutViewModel @Inject constructor(
     /**
      * function to remove a set from a workout
      * @param exercise: exercise to remove set from
-     * @param set: set to remove
+     * @param setToRemove: set to remove
      */
     fun removeSet(exercise: Mexercise, setToRemove: Mset) {
         val updatedExercise = exercise.copy(
