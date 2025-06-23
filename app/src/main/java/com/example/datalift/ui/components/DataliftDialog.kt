@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.datalift.designsystem.theme.DataliftTheme
 import com.example.datalift.screens.challenges.getStartOfNextDay
-import com.example.datalift.screens.challenges.getStartOfTommorwTimetamp
+import com.example.datalift.screens.challenges.getStartOfTomorrowTimestamp
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -293,7 +293,7 @@ fun DateRangePickerModal(
 @OptIn(ExperimentalMaterial3Api::class)
 private object FutureSelectableDate: SelectableDates{
     override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-        return utcTimeMillis >= getStartOfTommorwTimetamp()
+        return utcTimeMillis >= getStartOfTomorrowTimestamp()
     }
 
     override fun isSelectableYear(year: Int): Boolean {
@@ -311,7 +311,7 @@ private fun currentYear(): Int {
 private fun isValidRange(startDate: Long?, endDate: Long?): Boolean {
     if(startDate == null || endDate == null) return false
 
-    val tomorrow = getStartOfTommorwTimetamp()
+    val tomorrow = getStartOfTomorrowTimestamp()
     val dayAfterTomorrow = getStartOfNextDay(tomorrow)
     return startDate >= tomorrow && endDate >= dayAfterTomorrow
 }

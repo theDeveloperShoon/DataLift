@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -87,11 +86,11 @@ class ChallengeCreationViewModel @Inject constructor(
     }
 
     private fun getUsers(query: String): MutableStateFlow<List<Muser>>{
-        val _users = MutableStateFlow<List<Muser>>(emptyList())
+        val users = MutableStateFlow<List<Muser>>(emptyList())
         userRepo.getUsers(query){ userList ->
-            _users.value = userList
+            users.value = userList
         }
-        return _users
+        return users
     }
 
     fun getUnitSystem(): Boolean {
@@ -184,11 +183,7 @@ class ChallengeCreationViewModel @Inject constructor(
 
         var wasSuccessful = false
         challengeRepo.createChallenge(getCurrentUserId(), challenge){ createdChallenge ->
-            if (createdChallenge != null){
-                wasSuccessful = true
-            } else {
-                wasSuccessful = false
-            }
+            wasSuccessful = createdChallenge != null
         }
         return wasSuccessful
     }
@@ -214,24 +209,24 @@ class ChallengeCreationViewModel @Inject constructor(
     ) : Boolean{
         return title.isNotBlank() && (goal != null)
                 && (startDate != null
-                    && startDate > getStartOfTommorwTimetamp()
+                    && startDate > getStartOfTomorrowTimestamp()
                     )
                 && (endDate != null && endDate > getStartOfNextDay(startDate) )
     }
 }
 
-fun roundTimestampToStartOfDay(timestamp: Long): Long{
-    val instant = Instant.ofEpochMilli(timestamp)
-
-    val zonedDateTime = ZonedDateTime.ofInstant(
-        instant,
-        ZoneId.systemDefault()
-    )
-
-    val startOfDay = zonedDateTime.toLocalDate().atStartOfDay(ZoneId.systemDefault())
-
-    return startOfDay.toInstant().toEpochMilli()
-}
+//fun roundTimestampToStartOfDay(timestamp: Long): Long{
+//    val instant = Instant.ofEpochMilli(timestamp)
+//
+//    val zonedDateTime = ZonedDateTime.ofInstant(
+//        instant,
+//        ZoneId.systemDefault()
+//    )
+//
+//    val startOfDay = zonedDateTime.toLocalDate().atStartOfDay(ZoneId.systemDefault())
+//
+//    return startOfDay.toInstant().toEpochMilli()
+//}
 fun getStartOfNextDay(dayOfInterest: Long) : Long{
     val zoneID = ZoneId.systemDefault()
     return LocalDate.ofInstant(
@@ -244,7 +239,7 @@ fun getStartOfNextDay(dayOfInterest: Long) : Long{
 
 }
 
-fun getStartOfTommorwTimetamp(): Long{
+fun getStartOfTomorrowTimestamp(): Long{
 //    val today = LocalDate.now(ZoneId.systemDefault())
 //
 //    val tomorrow = today.plusDays(1)
