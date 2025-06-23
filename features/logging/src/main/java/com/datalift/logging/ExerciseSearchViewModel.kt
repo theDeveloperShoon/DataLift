@@ -1,0 +1,46 @@
+package com.datalift.logging
+
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.datalift.data.repository.WorkoutRepository
+import com.datalift.model.data.ExerciseResource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
+
+@HiltViewModel
+class ExerciseSearchViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val workoutRepository: WorkoutRepository
+) : ViewModel() {
+
+    val searchQuery = savedStateHandle.getStateFlow(key = SEARCH_QUERY, initialValue = "")
+
+    val searchUiState: StateFlow<ExerciseSearchUiState> =
+        searchQuery.flatMapLatest { query ->
+            if(query.trim().length < SEARCH_QUERY_MIN_LENGTH){
+                flowOf(ExerciseSearchUiState.EmptyQuery)
+            } else {
+                workoutRepository.queryExercise(query)
+                    .map<List<ExerciseResource>, ExerciseSearchUiState> { exercises ->
+                        ExerciseSearchUiState.Success(exercises)
+                    }.catch {
+                        emit(ExerciseSearchUiState.LoadFailed)
+                    }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = ExerciseSearchUiState.Loading
+        )
+}
+
+private const val SEARCH_QUERY = "exerciseSearchQuery"
+private const val SEARCH_QUERY_MIN_LENGTH = 1
