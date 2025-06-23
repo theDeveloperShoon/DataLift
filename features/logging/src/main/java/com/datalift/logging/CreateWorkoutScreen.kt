@@ -21,12 +21,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.designsystem.theme.DataliftTheme
 import com.datalift.model.data.Exercise
@@ -35,6 +38,25 @@ import com.datalift.model.data.Workout
 import com.datalift.ui.WorkoutPreviewParameterProvider
 import com.datalift.ui.exerciseItemList
 import com.datalift.ui.muscleGroupChips
+
+@Composable
+internal fun CreateWorkoutScreen(
+    navUp: () -> Unit,
+    navigateToExerciseSearch: () -> Unit,
+    draftingWorkoutViewModel: DraftingWorkoutViewModel = hiltViewModel()
+){
+    val uiState by draftingWorkoutViewModel.uiState.collectAsStateWithLifecycle()
+    CreateWorkoutScreen(
+        navUp = navUp,
+        workoutName = uiState.title,
+        addExercise = navigateToExerciseSearch,
+        saveWorkout = draftingWorkoutViewModel::saveWorkout,
+        changeWorkoutName = draftingWorkoutViewModel::updateTitle,
+        selectMuscleGroup = draftingWorkoutViewModel::updateMuscleGroups,
+        selectExercise = {}, // TODO: Make a screen based off of AddExerciseScreen and pass in the exercise
+        exercises = emptyList()
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
