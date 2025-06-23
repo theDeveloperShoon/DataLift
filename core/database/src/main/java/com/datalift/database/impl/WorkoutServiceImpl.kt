@@ -1,7 +1,9 @@
 package com.datalift.database.impl
 
+import android.util.Log
 import com.datalift.database.service.AccountService
 import com.datalift.database.service.WorkoutService
+import com.datalift.model.data.ExerciseResource
 import com.datalift.model.data.WorkoutResource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -55,6 +57,40 @@ class WorkoutServiceImpl @Inject constructor(
                 }.addOnFailureListener {
                     cancel("Failed to get workout")
                 }
+        }
+    }
+
+    override fun queryExercise(query: String): Flow<List<ExerciseResource>> {
+        if(query.isBlank()){
+            return callbackFlow {
+                trySend(emptyList())
+            }
+        }
+        return callbackFlow {
+            firestore.collection("ExerciseList")
+                .whereGreaterThanOrEqualTo("Title", query)
+                .whereLessThanOrEqualTo("Title", query + "\uf8ff")
+                .limit(10)
+                .addSnapshotListener { snapShot, exception ->
+                    if (exception != null) {
+                        // Handle the error (e.g., log or show a message to the user)
+                        Log.e("Firestore",
+                            "Error fetching exercises: ${exception.message}"
+                        )
+                        trySend(emptyList()) // Return an empty list if there's an error
+                        return@addSnapshotListener
+                    }
+                    val exerciseList = mutableListOf<ExerciseResource>()
+
+                    snapShot?.documents?.forEach { document ->
+                        val exercise = document.toObject<ExerciseResource>()
+                        if (exercise != null) {
+                            exerciseList.add(exercise)
+                        }
+                    }
+                    trySend(exerciseList.toList())
+                }
+
         }
     }
 
