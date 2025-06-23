@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,11 +34,36 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.components.DataliftLoadingIcon
 import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.designsystem.theme.DataliftTheme
 import com.datalift.model.data.ExerciseResource
 import com.datalift.ui.ExerciseResourcePreviewParamterProvider
+
+@Composable
+internal fun ExerciseSearchScreen(
+    navUp: () -> Unit,
+    onSaveExercise: () -> Unit,
+    exerciseViewModel: ExerciseSearchViewModel = hiltViewModel()
+){
+    val searchQuery by exerciseViewModel.searchQuery.collectAsStateWithLifecycle()
+    val exerciseSearchUiState by exerciseViewModel.searchUiState.collectAsStateWithLifecycle()
+
+    ExerciseSearchScreen(
+        exerciseSearchUiState = exerciseSearchUiState,
+        recentSearchQueriesUiState = RecentSearchQueriesUiState.Loading,
+        onBackClick = navUp,
+        searchQuery = searchQuery,
+        onSelectRecentQuery = {},
+        onSearchQueryChange = {}, //exerciseViewModel::updateSearchQuery,
+        onSearchTrigger = {}, //exerciseViewModel::search,
+        selectedExercise = null,
+        selectExercise = {},
+        saveExercise = {},
+    )
+}
 
 @Composable
 internal fun ExerciseSearchScreen(
