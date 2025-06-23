@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.datalift.android.feature)
     alias(libs.plugins.datalift.android.library.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
