@@ -7,23 +7,19 @@ import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.model.ExerciseItem
-import com.example.datalift.model.GoalType
 import com.example.datalift.model.Manalysis
 import com.example.datalift.model.MexerAnalysis
 import com.example.datalift.model.analysisRepo
-import com.example.datalift.model.Mgoal
 import com.example.datalift.model.Mworkout
 import com.example.datalift.model.userRepo
 import com.example.datalift.model.userWeights
 import com.google.firebase.FirebaseApp
-import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,15 +29,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.json.JSONObject
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class analysisViewModel @Inject constructor(
     private val analysisRepo: analysisRepo,
-    private val workoutRepo: WorkoutRepository,
+    private val workoutRepo: WorkoutRepository2,
     private val userRepo: userRepo
 ) : ViewModel()  {
     private var auth: FirebaseAuth = Firebase.auth

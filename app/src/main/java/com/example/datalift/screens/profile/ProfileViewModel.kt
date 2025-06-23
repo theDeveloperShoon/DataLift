@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.datalift.data.repository.AnalysisRepository
 import com.example.datalift.data.repository.GoalRepository
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.model.ExerciseItem
 import com.example.datalift.model.GoalType
 import com.example.datalift.model.MexerAnalysis
@@ -30,7 +30,7 @@ class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val userRepo: userRepo,
     private val goalRepo: GoalRepository,
-    private val workoutRepo: WorkoutRepository,
+    private val workoutRepo: WorkoutRepository2,
     private val analysisRepo: AnalysisRepository
 ) : ViewModel() {
 //    private var auth: FirebaseAuth = Firebase.auth

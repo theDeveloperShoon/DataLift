@@ -1,6 +1,6 @@
 package com.example.datalift.data.di
 
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.model.WorkoutRepo
 import dagger.Binds
 import dagger.Module
@@ -13,5 +13,5 @@ abstract class WorkoutRepositoryModule {
     @Binds
     abstract fun bindWorkoutRepository(
         workoutRepo: WorkoutRepo
-    ) : WorkoutRepository
+    ) : WorkoutRepository2
 }

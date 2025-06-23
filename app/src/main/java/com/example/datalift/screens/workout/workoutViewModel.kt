@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.datalift.data.repository.PostRepositoryTwo
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 
 //data models
 import com.example.datalift.model.ExerciseItem
@@ -39,7 +39,7 @@ import javax.inject.Inject
 class WorkoutViewModel @Inject constructor(
     private val userRepo: userRepo,
     private val postRepo: PostRepositoryTwo,
-    private val workoutRepo: WorkoutRepository
+    private val workoutRepo: WorkoutRepository2
 ) : ViewModel() {
 
     fun getUnitSystem(): Boolean {

@@ -2,7 +2,7 @@ package com.example.datalift.model
 
 import android.util.Log
 import com.example.datalift.data.repository.PostRepositoryTwo
-import com.example.datalift.data.repository.WorkoutRepository
+import com.example.datalift.data.repository.WorkoutRepository2
 import com.example.datalift.data.repository.AnalysisRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -13,7 +13,7 @@ class WorkoutRepo @Inject constructor(
     private val postRepo: PostRepositoryTwo,
     private val analysisRepo: AnalysisRepository,
     private val challengeRepo: challengeRepo
-) : WorkoutRepository {
+) : WorkoutRepository2 {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     /**
