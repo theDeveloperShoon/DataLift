@@ -1,6 +1,7 @@
 package com.datalift.data.repository
 
 import com.datalift.database.service.WorkoutService
+import com.datalift.model.data.ExerciseResource
 import com.datalift.model.data.Workout
 import com.datalift.model.data.mapToWorkout
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,9 @@ class OfflineFirstLoggedWorkoutRepository @Inject constructor(
         workoutService.getWorkout(workoutId = workoutId).map {
             Workout(it)
         }
+
+    override fun queryExercise(string: String): Flow<List<ExerciseResource>> =
+        workoutService.queryExercise(query = string)
 
     override suspend fun deleteWorkout(workoutId: String) {
         workoutService.deleteWorkout(workoutId = workoutId)
