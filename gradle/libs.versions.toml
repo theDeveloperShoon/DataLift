@@ -36,6 +36,7 @@ material = "1.12.0"
 materialCompose = "1.7.6"
 robolectric = "4.14.1"
 roborazzi = "1.8.0-alpha-5"
+room = "2.7.2"
 vico = "2.0.1"
 runtimeAndroid = "1.7.8"
 material3Android = "1.3.2"
@@ -100,6 +101,9 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric"}
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 
 vico-compose = { group = "com.patrykandpatrick.vico", name = "compose", version.ref = "vico" }
@@ -113,7 +117,7 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin"}
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin"}
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp"}
-
+room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -128,6 +132,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+room = { id = "androidx.room", version.ref = "room" }
 
 # Local Defined Plugins
 datalift-android-application = { id = "datalift.android.application"}
@@ -138,5 +143,6 @@ datalift-android-feature = { id = "datalift.android.feature" }
 datalift-android-library = { id = "datalift.android.library" }
 datalift-android-library-compose = { id = "datalift.android.library.compose" }
 datalift-android-library-jacoco = { id = "datalift.android.library.jacoco" }
+datalift-android-room = { id = "datalift.android.room" }
 datalift-hilt = { id = "datalift.hilt" }
 datalift-jvm-library = { id = "datalift.jvm.library"}
