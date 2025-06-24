@@ -50,20 +50,23 @@ internal fun ExerciseSearchScreen(
 ){
     val searchQuery by exerciseViewModel.searchQuery.collectAsStateWithLifecycle()
     val exerciseSearchUiState by exerciseViewModel.searchUiState.collectAsStateWithLifecycle()
+    val recentSearchQueriesUiState by exerciseViewModel.recentSearchQueriesUiState.collectAsStateWithLifecycle()
 
     ExerciseSearchScreen(
         exerciseSearchUiState = exerciseSearchUiState,
-        recentSearchQueriesUiState = RecentSearchQueriesUiState.Loading,
+        recentSearchQueriesUiState = recentSearchQueriesUiState,
         onBackClick = navUp,
         searchQuery = searchQuery,
         onSelectRecentQuery = {query ->
             exerciseViewModel.updateSearchQuery(query)
+            exerciseViewModel.onSearchTrigger(query)
         },
         onSearchQueryChange = exerciseViewModel::updateSearchQuery, //exerciseViewModel::updateSearchQuery,
-        onSearchTrigger = {}, //exerciseViewModel::search,  // All this is supposed to do is add to recentSearches
+        onSearchTrigger = exerciseViewModel::onSearchTrigger, //exerciseViewModel::search,  // All this is supposed to do is add to recentSearches
         selectedExercise = null,
         selectExercise = {},
-        saveExercise = {},
+        saveExercise = {
+        },
     )
 }
 
@@ -128,7 +131,8 @@ internal fun ExerciseSearchScreen(
                 ExerciseSearchUiState.EmptyQuery -> {
                     if(recentSearchQueriesUiState is RecentSearchQueriesUiState.Success){
                         RecentSearchesBody(
-                            recentSearchQueries = recentSearchQueriesUiState.recentSearchQueries,
+                            recentSearchQueries = recentSearchQueriesUiState.recentSearchQueries
+                                .map { it.query },
                             onSelectRecentQuery = onSelectRecentQuery,
                         )
                     }
