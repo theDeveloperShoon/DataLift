@@ -40,6 +40,9 @@ class ExerciseSearchViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = ExerciseSearchUiState.Loading
         )
+    fun updateSearchQuery(query: String){
+        savedStateHandle[SEARCH_QUERY] = query
+    }
 }
 
 private const val SEARCH_QUERY = "exerciseSearchQuery"

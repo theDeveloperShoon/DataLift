@@ -56,9 +56,11 @@ internal fun ExerciseSearchScreen(
         recentSearchQueriesUiState = RecentSearchQueriesUiState.Loading,
         onBackClick = navUp,
         searchQuery = searchQuery,
-        onSelectRecentQuery = {},
-        onSearchQueryChange = {}, //exerciseViewModel::updateSearchQuery,
-        onSearchTrigger = {}, //exerciseViewModel::search,
+        onSelectRecentQuery = {query ->
+            exerciseViewModel.updateSearchQuery(query)
+        },
+        onSearchQueryChange = exerciseViewModel::updateSearchQuery, //exerciseViewModel::updateSearchQuery,
+        onSearchTrigger = {}, //exerciseViewModel::search,  // All this is supposed to do is add to recentSearches
         selectedExercise = null,
         selectExercise = {},
         saveExercise = {},
