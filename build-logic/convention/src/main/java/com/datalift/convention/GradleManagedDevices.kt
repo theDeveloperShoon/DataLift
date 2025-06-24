@@ -2,7 +2,6 @@ package com.datalift.convention
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.ManagedVirtualDevice
-import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.invoke
 
 internal fun configureGradleManagedDevices(
@@ -10,12 +9,12 @@ internal fun configureGradleManagedDevices(
 ) {
     val pixel3a = DeviceConfig("Pixel 3a", 34, "aosp")
 
-    val allDevices = listOf(pixel3a)
+    val allDeviceConfigurations = listOf(pixel3a)
 //    val ciDevices = listOf()  // This is for automated testing devices (aosp-atd)
     commonExtension.testOptions{
         managedDevices{
-            devices{
-                allDevices.forEach { deviceConfig ->
+            allDevices{
+                allDeviceConfigurations.forEach { deviceConfig ->
                     maybeCreate(deviceConfig.taskName, ManagedVirtualDevice::class.java).apply{
                         device = deviceConfig.device
                         apiLevel = deviceConfig.apiLevel
