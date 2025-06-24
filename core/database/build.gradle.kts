@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.datalift.android.library)
+    alias(libs.plugins.datalift.android.room)
     alias(libs.plugins.datalift.hilt)
 }
 
