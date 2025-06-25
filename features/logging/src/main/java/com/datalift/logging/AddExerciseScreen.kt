@@ -30,10 +30,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.components.DataliftNumberPicker
 import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.designsystem.theme.DataliftTheme
-import com.datalift.model.data.ExerciseSet
+import com.datalift.logging.models.ExerciseDraft
+import com.datalift.logging.models.ExerciseSetDraft
+import com.datalift.logging.models.toExerciseSetDraft
 import com.datalift.model.data.Workout
 import com.datalift.ui.VerticalNumberPicker
 import com.datalift.ui.WorkoutPreviewParameterProvider
@@ -51,6 +55,28 @@ import com.datalift.ui.WorkoutPreviewParameterProvider
     You can then add reps and sets to the exercise.
  */
 
+@Composable
+internal fun AddExerciseScreen(
+    navBack: () -> Unit,
+    viewModel: AddExerciseViewModel = hiltViewModel(),
+    saveExercise: (ExerciseDraft) -> Unit
+){
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    AddExerciseScreen(
+        exerciseTitle = uiState.exerciseName,
+        navBack = navBack,
+        saveExercise = {
+            saveExercise(uiState.convertToExerciseDraft())
+        },
+        addSet = viewModel::addSet,
+        updateSetWeight = viewModel::updateSetWeight,
+        updateSetWeightDecimal = viewModel::updateSetWeightDecimal,
+        removeSet = viewModel::removeSet,
+        sets = uiState.sets
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AddExerciseScreen(
@@ -58,10 +84,10 @@ internal fun AddExerciseScreen(
     navBack: () -> Unit,
     saveExercise: () -> Unit,
     addSet: () -> Unit,
-    updateSetWeight: (Int) -> Unit,
-    updateSetWeightDecimal: (Int) -> Unit,
-    removeSet: (ExerciseSet) -> Unit,
-    sets: List<ExerciseSet>,
+    updateSetWeight: (String, Int) -> Unit,
+    updateSetWeightDecimal: (String, Int) -> Unit,
+    removeSet: (String) -> Unit,
+    sets: List<ExerciseSetDraft>,
 ){
     Scaffold(
         topBar = {
@@ -108,29 +134,33 @@ internal fun AddExerciseScreen(
 @Composable
 private fun SetsList(
     addSet: () -> Unit,
-    updateSetWeight: (Int) -> Unit,
-    updateSetWeightDecimal: (Int) -> Unit,
-    removeSet: (ExerciseSet) -> Unit,
-    sets: List<ExerciseSet>,
+    updateSetWeight: (String, Int) -> Unit,
+    updateSetWeightDecimal: (String, Int) -> Unit,
+    removeSet: (String) -> Unit,
+    sets: List<ExerciseSetDraft>,
 ){
-    var selectedSetIndex by remember { mutableStateOf<Int?>(null) }
+    var selectedSetId by remember { mutableStateOf<String?>(null) }
 
     LazyColumn {
         itemsIndexed(sets) { index ,set ->
             CollapsableSet(
-                collapsed = selectedSetIndex != index,
+                collapsed = selectedSetId != set.id,
                 setCollapsed = { collapsed ->
-                    (if (collapsed) null else index).also {
-                        selectedSetIndex = it
+                    (if (collapsed) null else set.id).also {
+                        selectedSetId = it
                     }
                 },
                 setNumber = index + 1,
                 reps = set.reps,
                 changeReps = {},
-                deleteSet = { removeSet(set) },
-                weightString = set.weight.toString(),
-                changeWeightWhole = updateSetWeight,
-                changeWeightDecimal = updateSetWeightDecimal,
+                deleteSet = { removeSet(set.id) },
+                weightString = set.formattedWeightString(),
+                changeWeightWhole = { newWholeWeight ->
+                    updateSetWeight(set.id, newWholeWeight)
+                },
+                changeWeightDecimal = { newDecimalWeight ->
+                    updateSetWeightDecimal(set.id, newDecimalWeight)
+                },
             )
         }
         item {
@@ -287,16 +317,16 @@ private fun CollapsableSetPreview(){
 @Preview
 @Composable
 private fun SetsListPreview(
-    @PreviewParameter(WorkoutPreviewParameterProvider::class)
-    workouts: List<Workout>
+    @PreviewParameter(ExerciseSetDraftPreviewParameterProvider::class)
+    sets: List<ExerciseSetDraft>
 ){
     DataliftTheme {
         SetsList(
-            sets = workouts[0].exercises[0].sets,
+            sets = sets,
             addSet = {},
             removeSet = {},
-            updateSetWeight = {},
-            updateSetWeightDecimal = {},
+            updateSetWeight = {_, _ -> },
+            updateSetWeightDecimal = {_, _ ->},
         )
     }
 }
@@ -313,10 +343,10 @@ private fun AddExerciseScreenPreview(
             navBack = {},
             addSet = {},
             removeSet = {},
-            sets = workouts[0].exercises[0].sets,
+            sets = workouts[0].exercises[0].sets.map { it.toExerciseSetDraft() },
             saveExercise = {},
-            updateSetWeight = {},
-            updateSetWeightDecimal = {}
+            updateSetWeight = {_, _ ->},
+            updateSetWeightDecimal = {_,_ ->}
         )
     }
 }
