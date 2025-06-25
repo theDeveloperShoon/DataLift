@@ -5,6 +5,27 @@ import com.datalift.model.data.Exercise
 import com.datalift.model.data.ExerciseResource
 import com.datalift.model.data.ExerciseSet
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
+import kotlin.math.abs
+
+data class ExerciseSetDraft(
+    val id: String = UUID.randomUUID().toString(),
+    val reps: Long,
+    val weightWhole: Int,
+    val weightDecimal: Int
+){
+    fun formattedWeightString(): String = "$weightWhole.$weightDecimal lbs"
+    fun toParcelableExerciseSet() = ParcelableExerciseSet(
+        reps = reps,
+        weight = weightWhole + (weightDecimal / 10.0)
+    )
+}
+
+internal fun ExerciseSet.toExerciseSetDraft() = ExerciseSetDraft(
+    reps = reps,
+    weightWhole = weight.toInt(),
+    weightDecimal = ((abs(weight) * 10).toInt()) % 10
+)
 
 @Parcelize
 data class ExerciseData(
