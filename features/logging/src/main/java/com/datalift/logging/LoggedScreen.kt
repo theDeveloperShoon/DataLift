@@ -20,6 +20,7 @@ import com.datalift.ui.workoutFeed
 @Composable
 internal fun LoggedScreen(
     navigateToWorkout: (String) -> Unit,
+    navigateToCreateWorkout: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WorkoutLogViewModel = hiltViewModel()
 ){
@@ -32,6 +33,7 @@ internal fun LoggedScreen(
         onRefresh = viewModel::onRefresh,
         onWorkoutClick = navigateToWorkout,
         onWorkoutDelete = viewModel::deleteWorkout,
+        addWorkoutClick = navigateToCreateWorkout,
         modifier = modifier
     )
 
@@ -43,6 +45,7 @@ internal fun LoggedScreen(
     uiState: WorkoutFeedUiState,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    addWorkoutClick: () -> Unit,
     onWorkoutClick: (String) -> Unit,
     onWorkoutDelete: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -64,6 +67,8 @@ internal fun LoggedScreen(
                 onWorkoutDelete = onWorkoutDelete,
             )
         }
+
+        //TODO: Add Create Workout Button
     }
 }
 
@@ -75,7 +80,8 @@ private fun LoggedScreenLoading(){
         isRefreshing = false,
         onRefresh = {},
         onWorkoutClick = {},
-        onWorkoutDelete = {}
+        onWorkoutDelete = {},
+        addWorkoutClick = {}
     )
 }
 
@@ -90,7 +96,8 @@ private fun LoggedScreenPopulatedRefreshing(
         isRefreshing = true,
         onRefresh = {},
         onWorkoutClick = {},
-        onWorkoutDelete = {}
+        onWorkoutDelete = {},
+        addWorkoutClick = {}
     )
 }
 
@@ -105,6 +112,7 @@ private fun LoggedScreenPopulated(
         isRefreshing = false,
         onRefresh = {},
         onWorkoutClick = {},
-        onWorkoutDelete = {}
+        onWorkoutDelete = {},
+        addWorkoutClick = {}
     )
 }

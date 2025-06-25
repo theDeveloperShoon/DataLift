@@ -41,7 +41,8 @@ fun NavGraphBuilder.loggingGraph(
     navigation<LoggingBaseRoute>(startDestination = LogRoute){
         composable<LogRoute>{
             LoggedScreen(
-                navigateToWorkout = onWorkoutClick,
+                navigateToWorkout = onWorkoutClick, // TODO: Add a WorkoutViewScreen
+                navigateToCreateWorkout = onAddWorkoutClick,
             )
         }
 
