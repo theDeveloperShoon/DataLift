@@ -1,6 +1,7 @@
 package com.datalift.logging
 
 import androidx.lifecycle.ViewModel
+import com.datalift.logging.models.ExerciseDraft
 import com.datalift.model.data.MuscleGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +46,15 @@ class DraftingWorkoutViewModel @Inject constructor(
         }
     }
 
+    fun addExercise(exercise: ExerciseDraft){
+        _uiState.update { currentState ->
+            val newExercises = currentState.exercises + exercise
+            currentState.copy(
+                exercises = newExercises
+            )
+        }
+    }
+
     fun saveWorkout(){
         //TODO: Save workout to database
     }
@@ -53,7 +63,5 @@ class DraftingWorkoutViewModel @Inject constructor(
 data class WorkoutDraftUiState(
     val title: String = "",
     val muscleGroups: List<MuscleGroup> = emptyList(),
-    val exercises: List<DraftExercise> = emptyList()
+    val exercises: List<ExerciseDraft> = emptyList()
 )
-
-data object DraftExercise
