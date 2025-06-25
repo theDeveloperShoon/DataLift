@@ -8,6 +8,7 @@ import com.datalift.data.repository.WorkoutRepository
 import com.datalift.domain.GetRecentExerciseSearchQueriesUseCase
 import com.datalift.model.data.ExerciseResource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -55,6 +56,9 @@ class ExerciseSearchViewModel @Inject constructor(
                 initialValue = RecentSearchQueriesUiState.Loading
             )
 
+    private val _selectedExercise = MutableStateFlow<ExerciseResource?>(null)
+    val selectedExercise: StateFlow<ExerciseResource?> = _selectedExercise
+
     fun updateSearchQuery(query: String){
         savedStateHandle[SEARCH_QUERY] = query
     }
@@ -64,6 +68,10 @@ class ExerciseSearchViewModel @Inject constructor(
         viewModelScope.launch {
             recentExerciseSearchRepository.insertOrReplaceRecentSearch(query)
         }
+    }
+
+    fun selectExercise(exercise: ExerciseResource){
+        _selectedExercise.value = exercise
     }
 }
 
