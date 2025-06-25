@@ -45,12 +45,13 @@ import com.datalift.ui.ExerciseResourcePreviewParamterProvider
 @Composable
 internal fun ExerciseSearchScreen(
     navUp: () -> Unit,
-    onSaveExercise: () -> Unit,
+    onSaveExercise: (ExerciseResource) -> Unit,
     exerciseViewModel: ExerciseSearchViewModel = hiltViewModel()
 ){
     val searchQuery by exerciseViewModel.searchQuery.collectAsStateWithLifecycle()
     val exerciseSearchUiState by exerciseViewModel.searchUiState.collectAsStateWithLifecycle()
     val recentSearchQueriesUiState by exerciseViewModel.recentSearchQueriesUiState.collectAsStateWithLifecycle()
+    val selectedExercise by exerciseViewModel.selectedExercise.collectAsStateWithLifecycle()
 
     ExerciseSearchScreen(
         exerciseSearchUiState = exerciseSearchUiState,
@@ -61,11 +62,14 @@ internal fun ExerciseSearchScreen(
             exerciseViewModel.updateSearchQuery(query)
             exerciseViewModel.onSearchTrigger(query)
         },
-        onSearchQueryChange = exerciseViewModel::updateSearchQuery, //exerciseViewModel::updateSearchQuery,
-        onSearchTrigger = exerciseViewModel::onSearchTrigger, //exerciseViewModel::search,  // All this is supposed to do is add to recentSearches
-        selectedExercise = null,
-        selectExercise = {},
+        onSearchQueryChange = exerciseViewModel::updateSearchQuery,
+        onSearchTrigger = exerciseViewModel::onSearchTrigger,  // All this is supposed to do is add to recentSearches
+        selectedExercise = selectedExercise,
+        selectExercise = exerciseViewModel::selectExercise,
         saveExercise = {
+            selectedExercise?.let { exercise ->
+                onSaveExercise(exercise)
+            }
         },
     )
 }
