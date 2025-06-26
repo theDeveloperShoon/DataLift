@@ -4,6 +4,7 @@ import android.util.Log
 import com.datalift.database.service.AccountService
 import com.datalift.database.service.WorkoutService
 import com.datalift.model.data.ExerciseResource
+import com.datalift.model.data.WorkoutDraft
 import com.datalift.model.data.WorkoutResource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -12,6 +13,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import kotlinx.datetime.Clock
 import javax.inject.Inject
 
 class WorkoutServiceImpl @Inject constructor(
@@ -92,6 +94,30 @@ class WorkoutServiceImpl @Inject constructor(
                 }
 
         }
+    }
+
+    override suspend fun saveWorkout(workout: WorkoutDraft) {
+        val newWorkout = WorkoutResource(
+            workoutId = "",
+            workoutName = workout.workoutName,
+            date = Clock.System.now(),
+            muscleGroups = workout.muscleGroups.ifEmpty {
+                listOf("Unspecified")
+            },
+            exercises = workout.exercises
+        )
+
+        firestore.collection("Users")
+            .document(auth.currentUserId)
+            .collection("Workouts")
+            .add(newWorkout)
+            .addOnSuccessListener { documentReference ->
+                val generatedId = documentReference.id
+                Log.d("Firebase", "Workout created with ID: $generatedId")
+                documentReference.update("workoutId", generatedId)
+            }.addOnFailureListener {
+                Log.d("Firebase", "Error creating workout: ${it.message}")
+            }.await()
     }
 
     override suspend fun deleteWorkout(workoutId: String) {
