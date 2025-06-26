@@ -1,17 +1,24 @@
 package com.datalift.logging
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.components.DevicePreviews
+import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.model.data.Workout
 import com.datalift.ui.WorkoutFeedUiState
 import com.datalift.ui.WorkoutPreviewParameterProvider
@@ -55,20 +62,36 @@ internal fun LoggedScreen(
         onRefresh = onRefresh,
         modifier = modifier
     ) {
-        val state = rememberLazyListState()
+        Box(modifier = Modifier.fillMaxSize()) {
+            val state = rememberLazyListState()
 
-        LazyColumn(
-            state = state,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            workoutFeed(
-                feedState = uiState,
-                onWorkoutClick = onWorkoutClick,
-                onWorkoutDelete = onWorkoutDelete,
-            )
+            LazyColumn(
+                state = state,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                workoutFeed(
+                    feedState = uiState,
+                    onWorkoutClick = onWorkoutClick,
+                    onWorkoutDelete = onWorkoutDelete,
+                )
+            }
+
+            if(uiState is WorkoutFeedUiState.Success) {
+                FloatingActionButton(
+                    onClick = addWorkoutClick,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(32.dp)
+                ) {
+                    Icon(
+                        imageVector = DataliftIcons.Add,
+                        contentDescription = "Add Workout"
+                    )
+                }
+            }
         }
 
-        //TODO: Add Create Workout Button
+
     }
 }
 
