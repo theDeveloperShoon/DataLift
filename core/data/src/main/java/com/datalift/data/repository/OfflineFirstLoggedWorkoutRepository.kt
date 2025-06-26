@@ -3,6 +3,7 @@ package com.datalift.data.repository
 import com.datalift.database.service.WorkoutService
 import com.datalift.model.data.ExerciseResource
 import com.datalift.model.data.Workout
+import com.datalift.model.data.WorkoutDraft
 import com.datalift.model.data.mapToWorkout
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -23,6 +24,10 @@ class OfflineFirstLoggedWorkoutRepository @Inject constructor(
 
     override fun queryExercise(string: String): Flow<List<ExerciseResource>> =
         workoutService.queryExercise(query = string)
+
+    override suspend fun saveWorkout(workout: WorkoutDraft) {
+        workoutService.saveWorkout(workout = workout)
+    }
 
     override suspend fun deleteWorkout(workoutId: String) {
         workoutService.deleteWorkout(workoutId = workoutId)
