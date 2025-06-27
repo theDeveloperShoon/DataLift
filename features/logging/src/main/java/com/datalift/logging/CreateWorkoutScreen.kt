@@ -221,7 +221,7 @@ fun MuscleGroupLabel(){
 }
 
 @Composable
-fun ExerciseLabel(){
+private fun ExerciseLabel(){
     Text(
         text = "Exercises",
         style = MaterialTheme.typography.titleLarge,
