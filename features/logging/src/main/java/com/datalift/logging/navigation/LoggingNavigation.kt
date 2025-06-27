@@ -14,6 +14,7 @@ import com.datalift.logging.DraftingWorkoutViewModel
 import com.datalift.logging.ExerciseSearchScreen
 import com.datalift.logging.ExerciseSearchViewModel
 import com.datalift.logging.LoggedScreen
+import com.datalift.logging.WorkoutViewScreen
 import com.datalift.logging.models.ExerciseDraft
 import kotlinx.serialization.Serializable
 
@@ -21,6 +22,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object CreateWorkoutRoute
 @Serializable data object ExerciseSearchRoute
 @Serializable data object LoggingBaseRoute
+@Serializable data class WorkoutViewRoute(val workoutId: String)
 @Serializable
 data class ExerciseLoggingRoute(
     val name: String,
@@ -43,6 +45,12 @@ fun NavGraphBuilder.loggingGraph(
             LoggedScreen(
                 navigateToWorkout = onWorkoutClick, // TODO: Add a WorkoutViewScreen
                 navigateToCreateWorkout = onAddWorkoutClick,
+            )
+        }
+
+        composable<WorkoutViewRoute>{
+            WorkoutViewScreen(
+                navUp = navUp
             )
         }
 
