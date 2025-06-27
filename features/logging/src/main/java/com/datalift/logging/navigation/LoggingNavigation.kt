@@ -62,7 +62,7 @@ fun NavGraphBuilder.loggingGraph(
     navigation<LoggingBaseRoute>(startDestination = LogRoute){
         composable<LogRoute>{
             LoggedScreen(
-                navigateToWorkout = onWorkoutClick, // TODO: Add a WorkoutViewScreen
+                navigateToWorkout = onWorkoutClick,
                 navigateToCreateWorkout = onAddWorkoutClick,
             )
         }
@@ -72,6 +72,10 @@ fun NavGraphBuilder.loggingGraph(
                 navUp = navUp
             )
         }
+
+        //TODO: Add EditWorkoutScreen
+
+
 
         composable<CreateWorkoutRoute>{ backStackEntry ->
             val parentEntry = remember(backStackEntry) {
@@ -100,6 +104,8 @@ fun NavGraphBuilder.loggingGraph(
                 draftingWorkoutViewModel = draftingWorkoutViewModel
             )
         }
+
+        // TODO: Add EditExerciseScreen
 
         composable<ExerciseSearchRoute>{backStackEntry ->
             val parentEntry = remember(backStackEntry) {

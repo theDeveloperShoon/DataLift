@@ -120,6 +120,17 @@ class WorkoutServiceImpl @Inject constructor(
             }.await()
     }
 
+    override suspend fun saveExistingWorkout(workout: WorkoutResource) {
+        if(workout.workoutId.isBlank()) return
+
+        firestore.collection("Users")
+            .document(auth.currentUserId)
+            .collection("Workouts")
+            .document(workout.workoutId)
+            .set(workout)
+            .await()
+    }
+
     override suspend fun deleteWorkout(workoutId: String) {
         firestore.collection("Users")
             .document(auth.currentUserId)

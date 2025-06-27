@@ -90,8 +90,6 @@ internal fun LoggedScreen(
                 }
             }
         }
-
-
     }
 }
 

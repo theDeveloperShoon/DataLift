@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.icon.DataliftIcons
 import com.datalift.designsystem.theme.DataliftTheme
+import com.datalift.logging.models.toExercise
 import com.datalift.model.data.Exercise
 import com.datalift.model.data.MuscleGroup
 import com.datalift.model.data.Workout
@@ -62,7 +63,7 @@ internal fun CreateWorkoutScreen(
         changeWorkoutName = draftingWorkoutViewModel::updateTitle,
         selectMuscleGroup = draftingWorkoutViewModel::updateMuscleGroups,
         selectExercise = {}, // TODO: Make a screen based off of AddExerciseScreen and pass in the exercise
-        exercises = emptyList()
+        exercises = uiState.exercises.map { it.toExercise() } // TODO: Change to use exercise
     )
 }
 

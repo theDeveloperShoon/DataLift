@@ -10,5 +10,6 @@ interface WorkoutService {
     fun getWorkout(workoutId: String) : Flow<WorkoutResource>
     fun queryExercise(query: String) : Flow<List<ExerciseResource>>
     suspend fun saveWorkout(workout: WorkoutDraft)
+    suspend fun saveExistingWorkout(workout: WorkoutResource)
     suspend fun deleteWorkout(workoutId: String)
 }
