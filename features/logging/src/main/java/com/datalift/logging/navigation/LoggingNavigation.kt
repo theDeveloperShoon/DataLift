@@ -4,7 +4,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.datalift.logging.AddExerciseScreen
@@ -30,6 +32,23 @@ data class ExerciseLoggingRoute(
 )
 
 const val ADDED_EXERCISE_RESULT_KEY = "addedExerciseResult"
+
+fun NavController.navigateToWorkoutLog(navOptions: NavOptions) =
+    navigate(route = LogRoute, navOptions)
+
+fun NavController.navigateToWorkout(workoutId: String) =
+    navigate(route = WorkoutViewRoute(workoutId))
+
+fun NavController.navigateToCreateWorkout() = navigate(route = CreateWorkoutRoute)
+
+fun NavController.navigateToExerciseSearch() =
+    navigate(route = ExerciseSearchRoute)
+
+fun NavController.navigateToExerciseLogging(name: String, bodyPart: String) =
+    navigate(route = ExerciseLoggingRoute(name, bodyPart))
+
+fun NavController.popBackToAddWorkout() =
+    popBackStack(route = CreateWorkoutRoute, inclusive = false)
 
 fun NavGraphBuilder.loggingGraph(
     onWorkoutClick: (String) -> Unit,
