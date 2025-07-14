@@ -9,7 +9,11 @@ android {
 }
 
 dependencies {
+    api(projects.core.common)
     api(projects.core.model)
+
+    api(libs.androidx.credentials)
+    api(libs.google.id)
 
     implementation(libs.kotlinx.datetime)
     implementation(libs.firebase.auth.ktx)
