@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable data class PostRoute(val id: String)
 @Serializable data object FeedBaseRoute
 
-fun NavController.navigateToFeed(navOptions: NavOptions) = navigate(route = FeedRoute, navOptions)
+fun NavController.navigateToFeed(navOptions: NavOptions?) = navigate(route = FeedRoute, navOptions)
 fun NavController.navigateToPost(id: String) = navigate(route = PostRoute(id))
 
 fun NavGraphBuilder.feedGraph(
