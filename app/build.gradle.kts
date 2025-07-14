@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.datalift.android.application)
     alias(libs.plugins.datalift.android.application.compose)
     alias(libs.plugins.datalift.android.application.flavors)
+    alias(libs.plugins.datalift.android.application.jacoco)
     alias(libs.plugins.datalift.hilt)
 
+    alias(libs.plugins.roborazzi)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.gms.google-services")
-    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -33,8 +34,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -51,6 +52,8 @@ android {
 
 dependencies {
     implementation(projects.features.feed)
+    implementation(projects.features.logging)
+    implementation(projects.features.login)
 
     implementation(projects.core.designsystem)
     implementation(projects.core.model)

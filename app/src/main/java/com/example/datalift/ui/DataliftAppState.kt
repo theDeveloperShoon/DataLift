@@ -13,11 +13,11 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.datalift.feed.navigation.navigateToFeed
 import com.datalift.logging.navigation.navigateToWorkoutLog
 import com.example.datalift.navigation.TopLevelDestinations
 import com.example.datalift.navigation.TopLevelDestinations.FEED
 import com.example.datalift.navigation.TopLevelDestinations.WORKOUTS
-import com.example.datalift.navigation.navigateToFeed
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase

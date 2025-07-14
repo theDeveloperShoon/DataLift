@@ -12,6 +12,9 @@ import com.datalift.logging.navigation.navigateToExerciseLogging
 import com.datalift.logging.navigation.navigateToExerciseSearch
 import com.datalift.logging.navigation.navigateToWorkout
 import com.datalift.logging.navigation.popBackToAddWorkout
+import com.datalift.login.navigation.LoginBaseRoute
+import com.datalift.login.navigation.loginGraph
+import com.datalift.login.navigation.navigateToSignUp
 import com.example.datalift.ui.DataliftAppState
 
 @Composable
@@ -27,13 +30,14 @@ fun DataliftNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = if(userLoggedIn) FeedBaseRoute else LoginRoute,
+        startDestination = if(userLoggedIn) FeedBaseRoute else LoginBaseRoute,
         modifier = modifier
     ){
-        loginScreen(
-            navController = navController,
-            onShowSnackbar = onShowSnackbar,
-            loginUser = loginUser
+        loginGraph(
+            navigateToHome = { navController.navigateToFeed(null) },
+            navigateToSignup = navController::navigateToSignUp,
+            navUp = navController::navigateUp
+        )
 
         feedGraph(
             onPostClick = navController::navigateToPost,

@@ -4,6 +4,8 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.datalift.R
 import com.datalift.designsystem.icon.DataliftIcons
+import com.datalift.feed.navigation.FeedBaseRoute
+import com.datalift.feed.navigation.FeedRoute
 import com.datalift.logging.navigation.LogRoute
 import com.datalift.logging.navigation.LoggingBaseRoute
 import kotlin.reflect.KClass
@@ -20,7 +22,8 @@ enum class TopLevelDestinations(
         selectedIcon = DataliftIcons.Home,
         unselectedIcon = DataliftIcons.HomeBorder,
         iconTextId = R.string.feed_title,
-        route = FeedRoute::class
+        route = FeedRoute::class,
+        baseRoute = FeedBaseRoute::class
     ),
     WORKOUTS(
         selectedIcon = DataliftIcons.Edit,

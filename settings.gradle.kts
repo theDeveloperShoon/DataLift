@@ -40,3 +40,5 @@ include(":core:ui")
 
 include(":features:feed")
 include(":features:logging")
+include(":features:login")
+include(":core:common")
