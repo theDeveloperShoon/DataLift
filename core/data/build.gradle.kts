@@ -9,12 +9,10 @@ android {
 }
 
 dependencies {
+    api(projects.core.common)
     api(projects.core.database)
 
     implementation(projects.core.model)
 
     implementation(libs.firebase.auth.ktx)
-    implementation(libs.kotlinx.coroutines)
-
-//    testImplem
 }
