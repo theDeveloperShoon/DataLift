@@ -1,6 +1,8 @@
 package com.datalift.data.di
 
+import com.datalift.data.repository.CompositeCredentialsRepository
 import com.datalift.data.repository.CompositeUserRepository
+import com.datalift.data.repository.CredentialsRepository
 import com.datalift.data.repository.DefaultRecentExerciseSearchRepository
 import com.datalift.data.repository.OfflineFirstLoggedWorkoutRepository
 import com.datalift.data.repository.OfflineFirstPostRepository
@@ -35,4 +37,9 @@ abstract class DataModule {
     internal abstract fun bindsRecentExerciseSearchRepository(
         recentExerciseSearchRepository: DefaultRecentExerciseSearchRepository
     ) : RecentExerciseSearchRepository
+
+    @Binds
+    internal abstract fun bindsCredentialsRepository(
+        credentialsRepository: CompositeCredentialsRepository
+    ) : CredentialsRepository
 }
