@@ -3,6 +3,15 @@ package com.example.datalift.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.datalift.feed.navigation.feedGraph
+import com.datalift.feed.navigation.navigateToFeed
+import com.datalift.feed.navigation.navigateToPost
+import com.datalift.logging.navigation.loggingGraph
+import com.datalift.logging.navigation.navigateToCreateWorkout
+import com.datalift.logging.navigation.navigateToExerciseLogging
+import com.datalift.logging.navigation.navigateToExerciseSearch
+import com.datalift.logging.navigation.navigateToWorkout
+import com.datalift.logging.navigation.popBackToAddWorkout
 import com.example.datalift.ui.DataliftAppState
 
 @Composable
@@ -25,6 +34,20 @@ fun DataliftNavHost(
             navController = navController,
             onShowSnackbar = onShowSnackbar,
             loginUser = loginUser
+
+        feedGraph(
+            onPostClick = navController::navigateToPost,
+            navUp = navController::navigateUp,
+        )
+
+        loggingGraph(
+            onWorkoutClick = navController::navigateToWorkout,
+            onAddWorkoutClick = navController::navigateToCreateWorkout,
+            navigateToExerciseSearch = navController::navigateToExerciseSearch,
+            navigateToExerciseLogging = navController::navigateToExerciseLogging,
+            popBackToAddWorkout = navController::popBackToAddWorkout,
+            navUp = navController::navigateUp,
+            getBackStackEntry = navController::getBackStackEntry
         )
 
         signUpGraph(

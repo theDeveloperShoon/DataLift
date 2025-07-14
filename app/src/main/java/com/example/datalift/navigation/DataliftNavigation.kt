@@ -24,7 +24,6 @@ import com.example.datalift.screens.challenges.ChallengeCreationScreen
 import com.example.datalift.screens.challenges.ChallengeDetailScreen
 import com.example.datalift.screens.challenges.ChallengesScreen
 import com.example.datalift.screens.challenges.ChallengesViewModel
-import com.example.datalift.screens.feed.FeedScreen
 import com.example.datalift.screens.feed.FeedViewModel
 import com.example.datalift.screens.feed.PostScreen
 import com.example.datalift.screens.friends.FriendsScreen
@@ -39,8 +38,8 @@ import com.example.datalift.screens.signUp.CredentialsScreen
 import com.example.datalift.screens.signUp.NameScreen
 import com.example.datalift.screens.signUp.PersonalInformationScreen
 import com.example.datalift.screens.signUp.SignUpViewModel
-import com.example.datalift.screens.workout.WorkoutDetailsScreen
 import com.example.datalift.screens.workout.WorkoutDetailsEditScreen
+import com.example.datalift.screens.workout.WorkoutDetailsScreen
 import com.example.datalift.screens.workout.WorkoutListScreen
 import com.example.datalift.screens.workout.WorkoutScreen
 import com.example.datalift.screens.workout.WorkoutViewModel
@@ -208,8 +207,8 @@ fun NavGraphBuilder.signUpGraph(
     }
 }
 
-fun NavController.navigateToWorkout(navOptions: NavOptions) =
-    navigate(route = WorkoutListRoute, navOptions)
+//fun NavController.navigateToWorkout(navOptions: NavOptions) =
+//    navigate(route = WorkoutListRoute, navOptions)
 
 fun NavController.navigateToWorkoutDetail(id: String){
     navigate(route = WorkoutDetail(id))
@@ -299,11 +298,11 @@ fun NavGraphBuilder.workoutGraph(
     }
 }
 
-fun NavController.navigateToFeed(navOptions: NavOptions) = navigate(route = FeedRoute, navOptions)
+//fun NavController.navigateToFeed(navOptions: NavOptions) = navigate(route = FeedRoute, navOptions)
 
-fun NavController.navigateToPost(id: String, uid: String){
-    navigate(route = PostDetail(id, uid))
-}
+//fun NavController.navigateToPost(id: String, uid: String){
+//    navigate(route = PostDetail(id, uid))
+//}
 
 fun NavGraphBuilder.feedSection(
     navController: NavController
@@ -316,11 +315,11 @@ fun NavGraphBuilder.feedSection(
 
             val feedViewModel: FeedViewModel = hiltViewModel(parentEntry)
 
-            FeedScreen(
-                feedViewModel = feedViewModel,
-                navigateToPost = navController::navigateToPost,
-                navigateToProfile = navController::navigateToProfile
-            )
+//            FeedScreen(
+//                feedViewModel = feedViewModel,
+//                navigateToPost = navController::navigateToPost,
+//                navigateToProfile = navController::navigateToProfile
+//            )
         }
 
         composable<PostDetail> {  backStackEntry ->
