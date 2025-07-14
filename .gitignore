@@ -15,5 +15,4 @@
 .cxx
 local.properties
 
-/app/src/demo/*.json
-/app/*.json
+/app/**/google-services.json
