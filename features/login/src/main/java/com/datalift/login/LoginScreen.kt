@@ -179,6 +179,7 @@ private suspend fun launchCredentialManagerButtonUI(
                 serverClientId = context.getString(R.string.server_client_id)
             ).build()
 
+        // Displays the Sign-in with Google UI
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(signInWithGoogleOptions)
             .build()
