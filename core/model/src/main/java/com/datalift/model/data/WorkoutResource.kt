@@ -2,6 +2,11 @@ package com.datalift.model.data
 
 import kotlinx.datetime.Instant
 
+/**
+ * Data class representing a workout resource.
+ *
+ * This is a workout that is available from the WorkoutList collection in the database.
+ */
 data class WorkoutResource(
     val workoutId: String,
     val workoutName: String,
