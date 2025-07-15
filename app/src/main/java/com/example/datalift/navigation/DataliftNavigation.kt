@@ -19,6 +19,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
+import com.datalift.feed.navigation.FeedBaseRoute
 import com.datalift.login.navigation.navigateToLogin
 import com.example.datalift.screens.analysis.AnalysisRoute
 import com.example.datalift.screens.challenges.ChallengeCreationScreen
@@ -50,7 +51,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.serialization.Serializable
 
 @Serializable object LoginRoute
-@Serializable object FeedBaseRoute
+//@Serializable object FeedBaseRoute
 @Serializable object FeedRoute
 @Serializable object FriendsRoute
 @Serializable object SettingsBaseRoute
@@ -294,48 +295,48 @@ fun NavGraphBuilder.workoutGraph(
 //    navigate(route = PostDetail(id, uid))
 //}
 
-fun NavGraphBuilder.feedSection(
-    navController: NavController
-){
-    navigation<FeedBaseRoute>(startDestination = FeedRoute){
-        composable<FeedRoute> { backStackEntry ->
-            val parentEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(route = FeedBaseRoute)
-            }
-
-            val feedViewModel: FeedViewModel = hiltViewModel(parentEntry)
-
-//            FeedScreen(
-//                feedViewModel = feedViewModel,
-//                navigateToPost = navController::navigateToPost,
-//                navigateToProfile = navController::navigateToProfile
+//fun NavGraphBuilder.feedSection(
+//    navController: NavController
+//){
+//    navigation<FeedBaseRoute>(startDestination = FeedRoute){
+//        composable<FeedRoute> { backStackEntry ->
+//            val parentEntry = remember(backStackEntry) {
+//                navController.getBackStackEntry(route = FeedBaseRoute)
+//            }
+//
+//            val feedViewModel: FeedViewModel = hiltViewModel(parentEntry)
+//
+////            FeedScreen(
+////                feedViewModel = feedViewModel,
+////                navigateToPost = navController::navigateToPost,
+////                navigateToProfile = navController::navigateToProfile
+////            )
+//        }
+//
+//        composable<PostDetail> {  backStackEntry ->
+//            val parentEntry = remember(backStackEntry) {
+//                navController.getBackStackEntry(route = FeedBaseRoute)
+//            }
+//
+//            val postDetail: PostDetail = backStackEntry.toRoute()
+//            val feedViewModel: FeedViewModel = hiltViewModel(parentEntry)
+//            val isImperial = feedViewModel.getUnitSystem()
+//            feedViewModel.updateCurrentViewedPost(postDetail.postId, postDetail.uid)
+//            val currentPost = feedViewModel.currentPost.collectAsStateWithLifecycle().value
+//            PostScreen(
+//                navUp = { navController.navigateUp() },
+//                navigateToProfile = navController::navigateToProfile,
+//                post = currentPost,
+//                isImperial = isImperial,
+//                addLike = feedViewModel::addLike,
+//                currentlyLiked = if(currentPost!= null) feedViewModel.currentlyLiked(currentPost) else false
 //            )
-        }
-
-        composable<PostDetail> {  backStackEntry ->
-            val parentEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(route = FeedBaseRoute)
-            }
-
-            val postDetail: PostDetail = backStackEntry.toRoute()
-            val feedViewModel: FeedViewModel = hiltViewModel(parentEntry)
-            val isImperial = feedViewModel.getUnitSystem()
-            feedViewModel.updateCurrentViewedPost(postDetail.postId, postDetail.uid)
-            val currentPost = feedViewModel.currentPost.collectAsStateWithLifecycle().value
-            PostScreen(
-                navUp = { navController.navigateUp() },
-                navigateToProfile = navController::navigateToProfile,
-                post = currentPost,
-                isImperial = isImperial,
-                addLike = feedViewModel::addLike,
-                currentlyLiked = if(currentPost!= null) feedViewModel.currentlyLiked(currentPost) else false
-            )
-
-        }
-    }
-
-
-}
+//
+//        }
+//    }
+//
+//
+//}
 
 fun NavController.navigateToAnalysis(navOptions: NavOptions) =
     navigate(route = AnalysisRoute, navOptions)

@@ -3,6 +3,7 @@ package com.example.datalift.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.datalift.feed.navigation.FeedBaseRoute
 import com.datalift.feed.navigation.feedGraph
 import com.datalift.feed.navigation.navigateToFeed
 import com.datalift.feed.navigation.navigateToPost
@@ -34,7 +35,14 @@ fun DataliftNavHost(
         modifier = modifier
     ){
         loginGraph(
-            navigateToHome = { navController.navigateToFeed(null) },
+            navigateToHome = {
+                navController.navigateToFeed(){
+                    popUpTo(LoginBaseRoute){
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            },
             navigateToSignup = navController::navigateToSignUp,
             navUp = navController::navigateUp
         )
@@ -67,9 +75,9 @@ fun DataliftNavHost(
             navController = navController
         )
 
-        feedSection(
-            navController = navController
-        )
+//        feedSection(
+//            navController = navController
+//        )
 
         analysisScreen()
 

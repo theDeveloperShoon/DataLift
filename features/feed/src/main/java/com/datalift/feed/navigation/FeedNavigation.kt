@@ -3,6 +3,7 @@ package com.datalift.feed.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.datalift.feed.FeedScreen
@@ -14,6 +15,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object FeedBaseRoute
 
 fun NavController.navigateToFeed(navOptions: NavOptions?) = navigate(route = FeedRoute, navOptions)
+fun NavController.navigateToFeed(builder: NavOptionsBuilder.() -> Unit) = navigate(route = FeedRoute, builder)
 fun NavController.navigateToPost(id: String) = navigate(route = PostRoute(id))
 
 fun NavGraphBuilder.feedGraph(
