@@ -68,11 +68,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginEmailAndPassword(){
+        if(!checkCanLogin()) return
+
         viewModelScope.launch {
             credentialsRepository.signInWithEmailAndPassword(
                 email = _uiState.value.username,
                 password = _uiState.value.password
-            ).map { result ->
+            ).collect { result ->
 
                 when(result){
                     is Result.Error -> {
@@ -93,8 +95,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             credentialsRepository
                 .signInWithGoogle(credential)
-                .map { result ->
-                    Log.d("LOGIN", "Result")
+                .collect { result ->
                     when (result) {
                         is Result.Error -> {
                             updateError(
@@ -104,7 +105,6 @@ class LoginViewModel @Inject constructor(
 
                         is Result.Success<*> -> {
                             loginUser()
-                            Log.d("LOGIN", "Success")
                         }
 
                         else -> Unit
