@@ -14,7 +14,9 @@ import com.datalift.logging.navigation.navigateToWorkout
 import com.datalift.logging.navigation.popBackToAddWorkout
 import com.datalift.login.navigation.LoginBaseRoute
 import com.datalift.login.navigation.loginGraph
+import com.datalift.login.navigation.navigateToLogin
 import com.datalift.login.navigation.navigateToSignUp
+import com.datalift.settings.navigation.settingsGraph
 import com.example.datalift.ui.DataliftAppState
 
 @Composable
@@ -23,8 +25,6 @@ fun DataliftNavHost(
     modifier: Modifier = Modifier,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     userLoggedIn: Boolean = false,
-    loginUser: () -> Unit,
-    logoutUser: () -> Unit,
 ) {
     val navController = appState.navController
 
@@ -54,6 +54,11 @@ fun DataliftNavHost(
             getBackStackEntry = navController::getBackStackEntry
         )
 
+        settingsGraph(
+            navigateToLogin = navController::navigateToLogin,
+            navUp = navController::navigateUp
+        )
+
         signUpGraph(
             navController = navController
         )
@@ -70,7 +75,7 @@ fun DataliftNavHost(
 
         settingsSection(
             navController = navController,
-            logoutUser = logoutUser
+            logoutUser = {}
         )
 
         friendsRoute(

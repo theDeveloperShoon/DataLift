@@ -19,6 +19,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
+import com.datalift.login.navigation.navigateToLogin
 import com.example.datalift.screens.analysis.AnalysisRoute
 import com.example.datalift.screens.challenges.ChallengeCreationScreen
 import com.example.datalift.screens.challenges.ChallengeDetailScreen
@@ -112,16 +113,16 @@ fun openProfileDetails(context: Context, profileId: String) : PendingIntent{
 
 const val uri = "https://www.datalift.com"
 
-fun NavController.navigateToLogin(){
-    navigate(
-        route = LoginRoute,
-        navOptions = navOptions {
-            popUpTo(0) {
-                inclusive = true
-            }
-        }
-    )
-}
+//fun NavController.navigateToLogin(){
+//    navigate(
+//        route = LoginRoute,
+//        navOptions = navOptions {
+//            popUpTo(0) {
+//                inclusive = true
+//            }
+//        }
+//    )
+//}
 
 fun NavGraphBuilder.loginScreen(
     navController: NavController,
@@ -356,7 +357,7 @@ fun NavGraphBuilder.analysisScreen(){
     }
 }
 
-fun NavController.navigateToSettings() = navigate(route = SettingsBaseRoute)
+//fun NavController.navigateToSettings() = navigate(route = SettingsBaseRoute)
 
 fun NavController.navigateToSettingsDetail(
     settingDetail: SettingDetail

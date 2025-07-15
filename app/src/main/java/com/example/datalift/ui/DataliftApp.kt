@@ -110,8 +110,6 @@ internal fun DataliftApp(
                 ) == SnackbarResult.ActionPerformed
             },
             userLoggedIn = appState.loggedIn,
-            loginUser = { appState.loggedIn = true },
-            logoutUser = { appState.loggedIn = false },
             modifier = Modifier.padding(padding)
         )
     }

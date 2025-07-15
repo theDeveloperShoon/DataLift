@@ -54,6 +54,7 @@ dependencies {
     implementation(projects.features.feed)
     implementation(projects.features.logging)
     implementation(projects.features.login)
+    implementation(projects.features.settings)
 
     implementation(projects.core.designsystem)
     implementation(projects.core.model)
