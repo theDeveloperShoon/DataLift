@@ -7,7 +7,7 @@ plugins {
 
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.kotlin.serialization)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
 }
 
 android {

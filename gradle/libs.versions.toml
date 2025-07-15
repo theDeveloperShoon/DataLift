@@ -21,6 +21,7 @@ firebaseAuth = "22.2.0"
 firebaseBom = "33.7.0"
 firebaseFirestore = "25.1.1"
 googleId = "1.1.1"
+googleServices = "4.4.3"
 hilt = "2.56.2"
 hiltExt = "1.2.0"
 kotlin = "2.1.21"
@@ -128,6 +129,7 @@ room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", vers
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
