@@ -9,6 +9,9 @@ import javax.inject.Inject
 class CompositeUserRepository @Inject constructor(
     private val accountService: AccountService
 ) : UserRepository {
+    override val isLoggedIn: Flow<Boolean>
+        get() = accountService.loggedInFlow
+
     override val userData: Flow<UserData>
         get() = accountService.user.map { user ->
             UserData(
