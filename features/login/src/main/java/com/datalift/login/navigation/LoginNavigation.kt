@@ -13,6 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object ForgotPasswordRoute
 @Serializable data object SignUpRoute
 
+fun NavController.navigateToLogin() = navigate(route = LoginRoute)
 fun NavController.navigateToSignUp() = navigate(route = SignUpRoute)
 
 fun NavGraphBuilder.loginGraph(
