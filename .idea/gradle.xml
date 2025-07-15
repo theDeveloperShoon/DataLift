@@ -39,6 +39,7 @@
             <option value="$PROJECT_DIR$/features/feed" />
             <option value="$PROJECT_DIR$/features/logging" />
             <option value="$PROJECT_DIR$/features/login" />
+            <option value="$PROJECT_DIR$/features/settings" />
           </set>
         </option>
       </GradleProjectSettings>
