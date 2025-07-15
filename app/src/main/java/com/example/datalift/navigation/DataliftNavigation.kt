@@ -26,8 +26,6 @@ import com.example.datalift.screens.challenges.ChallengeCreationScreen
 import com.example.datalift.screens.challenges.ChallengeDetailScreen
 import com.example.datalift.screens.challenges.ChallengesScreen
 import com.example.datalift.screens.challenges.ChallengesViewModel
-import com.example.datalift.screens.feed.FeedViewModel
-import com.example.datalift.screens.feed.PostScreen
 import com.example.datalift.screens.friends.FriendsScreen
 import com.example.datalift.screens.logIn.LoginScreen
 import com.example.datalift.screens.profile.ProfileScreen

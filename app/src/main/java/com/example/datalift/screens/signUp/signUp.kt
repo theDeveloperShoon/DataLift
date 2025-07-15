@@ -130,10 +130,10 @@ fun SignupFeatures(
 
 @Composable
 fun NameScreen(
+    modifier: Modifier = Modifier,
     signUpViewModel: SignUpViewModel = viewModel(),
     navUp: () -> Unit,
-    navNext: () -> Unit,
-    modifier: Modifier = Modifier
+    navNext: () -> Unit
 ){
     Column(
         modifier = modifier
@@ -182,10 +182,10 @@ fun NameScreen(
 
 @Composable
 fun PersonalInformationScreen(
+    modifier: Modifier = Modifier,
     signUpViewModel: SignUpViewModel = viewModel(),
     navUp: () -> Unit,
-    navNext: () -> Unit,
-    modifier: Modifier = Modifier
+    navNext: () -> Unit
 ) {
     Column(
         modifier = modifier
