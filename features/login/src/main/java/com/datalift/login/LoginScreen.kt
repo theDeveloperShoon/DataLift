@@ -176,7 +176,7 @@ private suspend fun launchCredentialManagerButtonUI(
     try {
         val signInWithGoogleOptions =
             GetSignInWithGoogleOption.Builder(
-                serverClientId = context.getString(R.string.serverClientId)
+                serverClientId = context.getString(R.string.server_client_id)
             ).build()
 
         val request = GetCredentialRequest.Builder()
