@@ -9,13 +9,17 @@ import com.datalift.model.data.User
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AccountServiceImpl @Inject constructor(
+    private val firestore: FirebaseFirestore,
     private val auth: FirebaseAuth
 ) : AccountService{
     override val currentUserId: String
@@ -79,6 +83,16 @@ class AccountServiceImpl @Inject constructor(
         }
     }
 
+    private suspend fun addUserToFirestore(user: User){
+        Log.d("LOGIN", "Adding User to Firestore")
+        Log.d("LOGIN", "User: $user")
+        Log.d("LOGIN", "Auth Id: ${auth.uid}")
+        firestore.collection("Users")
+            .document(user.id)
+            .set(user)
+            .await()
+    }
+
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
@@ -109,13 +123,38 @@ class AccountServiceImpl @Inject constructor(
 
                 Log.d("LOGIN", "Firebase Credential passed")
 
-                auth.signInWithCredential(firebaseCredential)
-                    .addOnSuccessListener {
-                        trySend(Result.Success(Unit))
-                    }
+                val authResult = auth.signInWithCredential(firebaseCredential)
                     .addOnFailureListener {
                         trySend(Result.Error(it))
                     }
+                    .await()
+
+                Log.d("LOGIN", "Firebase Auth signInWithCredential finished")
+
+                authResult.additionalUserInfo?.isNewUser.let { newUser ->
+                    if(newUser == true){
+                        addUserToFirestore(
+                            authResult.user?.toUser() ?: User()
+                        )
+                        Log.d("LOGIN", "User added to Firestore")
+                    }
+                }
+
+                trySend(Result.Success(Unit))
+
+//                    .addOnSuccessListener { authResult ->
+//                        authResult.additionalUserInfo?.isNewUser.let { newUser ->
+//                            if(newUser == true){
+//                                addUserToFirestore(
+//                                    authResult.user?.toUser() ?: User()
+//                                )
+//                            }
+//                        }
+//                        trySend(Result.Success(Unit))
+//                    }
+//                    .addOnFailureListener {
+//                        trySend(Result.Error(it))
+//                    }
 
                 awaitClose { Log.d("LOGIN", "Flow closed, User Logged In") }
             }
@@ -137,3 +176,9 @@ class AccountServiceImpl @Inject constructor(
 //        }
     }
 }
+
+fun FirebaseUser.toUser(): User = User(
+    id = this.uid,
+    name = this.displayName,
+    profileUrl = this.photoUrl.toString()
+)
