@@ -13,16 +13,18 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import com.datalift.settings.navigation.navigateToSettings
 import com.example.datalift.navigation.DataliftNavHost
 import com.example.datalift.navigation.navigateToFriends
 import com.example.datalift.navigation.navigateToProfile
-import com.example.datalift.navigation.navigateToSettings
 import com.example.datalift.ui.components.DataliftNavigationBar
 import com.example.datalift.ui.components.DataliftNavigationBarItem
 import com.example.datalift.ui.components.DataliftTopBar
@@ -50,7 +52,9 @@ internal fun DataliftApp(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
+    val loggedIn by appState.isLoggedIn.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         snackbarHost = {
@@ -60,7 +64,7 @@ internal fun DataliftApp(
             )
         },
         topBar = {
-            if(appState.loggedIn){
+            if(loggedIn){
                 val destination = appState.currentTopLevelDestinations
                 if(destination != null){
                     DataliftTopBar(
@@ -73,7 +77,7 @@ internal fun DataliftApp(
             }
         },
         bottomBar = {
-            if(appState.loggedIn){
+            if(loggedIn){
                 DataliftNavigationBar {
                     appState.topLevelDestinations.forEach {destination ->
                         val selected = currentDestination.isRouteInHierarchy(destination.baseRoute)
@@ -109,7 +113,7 @@ internal fun DataliftApp(
                     duration = SnackbarDuration.Short,
                 ) == SnackbarResult.ActionPerformed
             },
-            userLoggedIn = appState.loggedIn,
+            userLoggedIn = loggedIn,
             modifier = Modifier.padding(padding)
         )
     }

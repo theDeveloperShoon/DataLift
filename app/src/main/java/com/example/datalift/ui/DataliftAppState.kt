@@ -2,10 +2,9 @@ package com.example.datalift.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.util.trace
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -13,6 +12,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.datalift.data.repository.UserRepository
+import com.datalift.database.service.AccountService
 import com.datalift.feed.navigation.navigateToFeed
 import com.datalift.logging.navigation.navigateToWorkoutLog
 import com.example.datalift.navigation.TopLevelDestinations
@@ -21,6 +22,10 @@ import com.example.datalift.navigation.TopLevelDestinations.WORKOUTS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 fun getUserLoggedIn(): Boolean{
     val auth: FirebaseAuth = Firebase.auth
@@ -31,24 +36,37 @@ fun getUserLoggedIn(): Boolean{
 
 @Composable
 fun rememberDataliftAppState(
+    userRepository: UserRepository,
+    accountService: AccountService,
+    corountineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): DataliftAppState {
     return remember(
         navController,
     ) {
         DataliftAppState(
-            navController
+            navController = navController,
+            corountineScope = corountineScope,
+            userRepository = userRepository,
+            accountService = accountService
         )
     }
 }
 
 
 class DataliftAppState(
-    val navController: NavHostController
+    val navController: NavHostController,
+    accountService: AccountService,
+    corountineScope: CoroutineScope,
+    userRepository: UserRepository
 ) {
     private val previousDestination = mutableStateOf<NavDestination?>(null)
 
-    var loggedIn by mutableStateOf(getUserLoggedIn())
+    val isLoggedIn: StateFlow<Boolean> = userRepository.isLoggedIn.stateIn(
+        scope = corountineScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = accountService.loggedIn
+    )
 
     val currentDestination: NavDestination?
         @Composable get() {
