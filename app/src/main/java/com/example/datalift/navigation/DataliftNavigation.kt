@@ -113,17 +113,6 @@ fun openProfileDetails(context: Context, profileId: String) : PendingIntent{
 
 const val uri = "https://www.datalift.com"
 
-//fun NavController.navigateToLogin(){
-//    navigate(
-//        route = LoginRoute,
-//        navOptions = navOptions {
-//            popUpTo(0) {
-//                inclusive = true
-//            }
-//        }
-//    )
-//}
-
 fun NavGraphBuilder.loginScreen(
     navController: NavController,
     onShowSnackbar: suspend (String, String?) -> Boolean,
@@ -441,7 +430,7 @@ fun NavGraphBuilder.profileRoute(
                 // {$uri}/profile?profileId={$profileId}
                 // {$uri}/profile/{$profileId}
             )
-        ){ backStackEntry ->
+        ){
             val profileViewModel: ProfileViewModel = hiltViewModel()
 
             ProfileScreen(
@@ -505,7 +494,7 @@ fun NavGraphBuilder.challengesRoute(
             )
         }
 
-        composable<ChallengesCreation> { backstackEntry ->
+        composable<ChallengesCreation> {
             ChallengeCreationScreen(
                 navUp = navUp,
                 navigateToChallengeFeed = {

@@ -19,26 +19,16 @@ import com.datalift.logging.navigation.navigateToWorkoutLog
 import com.example.datalift.navigation.TopLevelDestinations
 import com.example.datalift.navigation.TopLevelDestinations.FEED
 import com.example.datalift.navigation.TopLevelDestinations.WORKOUTS
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
-fun getUserLoggedIn(): Boolean{
-    val auth: FirebaseAuth = Firebase.auth
-    val currentUser = auth.currentUser
-
-    return (currentUser != null)
-}
-
 @Composable
 fun rememberDataliftAppState(
     userRepository: UserRepository,
     accountService: AccountService,
-    corountineScope: CoroutineScope = rememberCoroutineScope(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): DataliftAppState {
     return remember(
@@ -46,7 +36,7 @@ fun rememberDataliftAppState(
     ) {
         DataliftAppState(
             navController = navController,
-            corountineScope = corountineScope,
+            corountineScope = coroutineScope,
             userRepository = userRepository,
             accountService = accountService
         )
