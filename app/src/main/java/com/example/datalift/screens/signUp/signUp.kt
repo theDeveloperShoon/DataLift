@@ -343,14 +343,14 @@ fun CredentialsScreen(
         Button(onClick = {
             Log.d("Testing", "Create account button clicked")
             if(!signUpViewModel.accountInformationValidated()){
-                signUpViewModel.createDBUser{
-                    val signedUp = signUpViewModel.accountCreated.value
-                    if(signedUp) {
-                        autofillManager?.commit()
-                        signUpViewModel.naving()
-                        navNext()
-                    }
-                }
+//                signUpViewModel.createDBUser{
+//                    val signedUp = signUpViewModel.accountCreated.value
+//                    if(signedUp) {
+//                        autofillManager?.commit()
+//                        signUpViewModel.naving()
+//                        navNext()
+//                    }
+//                }
             }
 
         }) { Text(text = "Create Account") }

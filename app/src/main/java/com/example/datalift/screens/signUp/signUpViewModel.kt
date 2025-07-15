@@ -27,9 +27,6 @@ class SignUpViewModel : ViewModel() {
     private val _user = MutableStateFlow<Muser?>(Muser())
     val user: StateFlow<Muser?> get() = _user
 
-    private val _accountCreated = MutableStateFlow(false)
-    val accountCreated: StateFlow<Boolean> get() = _accountCreated
-
     var username by mutableStateOf("")
         private set
 
@@ -159,29 +156,14 @@ class SignUpViewModel : ViewModel() {
 
         Log.d("testing", "valid account info: ${passwordInvalid || usernameInvalid || emailInvalid}")
         return (passwordInvalid || usernameInvalid || emailInvalid)
-//        if(passwordInvalid || usernameInvalid || emailInvalid) {
-//            return false
-//        } else {
-//            return true
-//        }
     }
 
     private fun passwordIsValid(): Boolean {
         return (password.isNotBlank() && password.length >= 6)
-//        if(password.isNotBlank() && password.length >= 6){
-//            return true
-//        } else {
-//            return false
-//        }
     }
 
     private fun usernameIsValid(): Boolean{
         return (username.isNotBlank())
-//        if(username.isNotBlank()){
-//            return true
-//        } else {
-//            return false
-//        }
     }
 
     private fun emailIsValid(): Boolean{
@@ -192,48 +174,20 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-
-
-
-    fun naving() {
-        _accountCreated.value = false
-    }
-
-    // a account create success, and email verification
     /**
      * Create user account with email and password
      *
-     * //@param email: email of user
-     * //@param name: preferred name of user
-     * //@param height: user height in inches
-     * //@param weight: user initial weight in lbs
-     * //@param privacy: boolean does user want their workouts to be public true=public
-     * //@param imperial: boolean, does the user want weight measurements in imperial or metric
-     * //@param password: Password associated with user account
-     *
-     * @return null
      *
      * @see FirebaseAuth.createUserWithEmailAndPassword
      * @see createUser
      */
-    fun createDBUser(/**email: String,
-                     name: String,
-                     gender: String,
-                     height: Double,
-                     weight: Double,
-                     privacy: Boolean,
-                     imperial: Boolean,
-                     password: String,
-                     dob: Timestamp**/
-                     callback: () -> Unit
-    ) {
+    fun createDBUser(callback: () -> Unit) {
         if (!_loading.value) {
             _loading.value = true
             auth.createUserWithEmailAndPassword(user.value?.email!!, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         //val uname = task.result?.user?.email?.split('@')?.get(0).toString()
-                        _accountCreated.value = true
                         createUser()
                         sendEmailVerification()
                         callback()
@@ -249,27 +203,8 @@ class SignUpViewModel : ViewModel() {
     /**
      * Create a user document in the database rather than the authentication object that was added before
      *
-     * //@param email: email of user
-     * //@param name: preferred name of user
-     * //@param height: user height in inches
-     * //@param weight: user initial weight in lbs
-     * //@param privacy: boolean does user want their workouts to be public true=public
-     * //@param imperial: boolean, does the user want weight measurements in imperial or metric
-     * //@param uname: username of user, only ever one account with this username
-     *
-     * @see createDBUser
      */
-    private fun createUser(
-        /**email: String,
-        name: String,
-        gender: String,
-        height: Double,
-        weight: Double,
-        privacy: Boolean,
-        imperial: Boolean,
-        uname: String,
-        dob: Instant**/
-    ){
+    private fun createUser(){
 
         val userId = auth.currentUser?.uid
         val weightList = mutableListOf<userWeights>()
