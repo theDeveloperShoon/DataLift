@@ -24,6 +24,15 @@ class AccountServiceImpl @Inject constructor(
     override val loggedIn: Boolean
         get() = auth.currentUser != null
 
+    override val loggedInFlow: Flow<Boolean>
+        get() = callbackFlow {
+            val listener = FirebaseAuth.AuthStateListener {
+                this.trySend(auth.currentUser != null)
+            }
+            auth.addAuthStateListener(listener)
+            awaitClose { auth.removeAuthStateListener(listener) }
+        }
+
 
     override val user: Flow<User>
         get() = callbackFlow {
@@ -82,6 +91,8 @@ class AccountServiceImpl @Inject constructor(
                 .addOnFailureListener {
                     trySend(Result.Error(it))
                 }
+
+            awaitClose { Log.d("LOGIN", "Flow closed, User Logged In") }
         }
     }
 
@@ -105,10 +116,13 @@ class AccountServiceImpl @Inject constructor(
                     .addOnFailureListener {
                         trySend(Result.Error(it))
                     }
+
+                awaitClose { Log.d("LOGIN", "Flow closed, User Logged In") }
             }
         }
         return callbackFlow {
             trySend(Result.Error(Exception("Invalid Credential")))
+            awaitClose { Log.d("LOGIN", "Flow closed, User Log-in Failed") }
         }
     }
 
