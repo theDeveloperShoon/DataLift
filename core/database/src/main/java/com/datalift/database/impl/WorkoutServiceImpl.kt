@@ -1,6 +1,8 @@
 package com.datalift.database.impl
 
 import android.util.Log
+import com.datalift.database.model.ExerciseQueryResource
+import com.datalift.database.model.toExerciseResource
 import com.datalift.database.service.AccountService
 import com.datalift.database.service.WorkoutService
 import com.datalift.model.data.ExerciseResource
@@ -89,17 +91,24 @@ class WorkoutServiceImpl @Inject constructor(
                         trySend(emptyList()) // Return an empty list if there's an error
                         return@addSnapshotListener
                     }
+
                     val exerciseList = mutableListOf<ExerciseResource>()
 
                     snapShot?.documents?.forEach { document ->
-                        val exercise = document.toObject<ExerciseResource>()
+                        val exerciseQueryResource = document.toObject<ExerciseQueryResource>()
+                        val exercise = exerciseQueryResource?.toExerciseResource()
                         if (exercise != null) {
                             exerciseList.add(exercise)
                         }
                     }
+
+                    Log.d("WorkoutService", "Sending Exercises")
+                    Log.d("WorkoutService", "Exercises fetched: ${exerciseList.size}")
                     trySend(exerciseList.toList())
+                    channel.close()
                 }
 
+            awaitClose { Log.d("WorkoutService", "Sent Exercise Query") }
         }
     }
 
