@@ -204,7 +204,6 @@ private fun PasswordTextField(
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
     login: (() -> Unit) -> Unit = {},
-    //TODO: Add a parameter for login, this checks if the user is canLogin
 ){
     val keyboardController = LocalSoftwareKeyboardController.current
 
