@@ -131,7 +131,7 @@ fun NavGraphBuilder.loginScreen(
                 }
             },
             onShowSnackbar = onShowSnackbar,
-            signinUser = loginUser
+            signInUser = loginUser
         )
     }
 }
