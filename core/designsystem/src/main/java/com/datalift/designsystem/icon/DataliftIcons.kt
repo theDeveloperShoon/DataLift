@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.EmojiEvents
@@ -33,8 +34,10 @@ object DataliftIcons {
     val Close = Icons.Default.Close
     val Collapsed = Icons.AutoMirrored.Outlined.KeyboardArrowLeft
     val Decrease = Icons.Default.Remove
+    val DisableVisibility = Icons.Filled.Visibility
     val Edit = Icons.Default.Edit
     val EditBorder = Icons.Outlined.Edit
+    val EnableVisibility = Icons.Filled.Visibility
     val Expanded = Icons.Outlined.KeyboardArrowDown
     val ExpandMore = Icons.Outlined.ChevronRight
     val Home = Icons.Default.Home
