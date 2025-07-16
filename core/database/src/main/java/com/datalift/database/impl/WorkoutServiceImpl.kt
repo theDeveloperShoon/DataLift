@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
@@ -38,10 +39,13 @@ class WorkoutServiceImpl @Inject constructor(
                     }
                     Log.d("WorkoutService","Workouts List sent")
                     trySend(workoutList.toList())
+                    channel.close()
                 }.addOnFailureListener {
                     Log.d("WorkoutService","Failure")
                    cancel("Failed to retrieve")
                 }
+
+            awaitClose { Log.d("WorkoutService","Closed") }
         }
     }
 
