@@ -21,15 +21,7 @@ data class ExerciseQueryResource(
 
     @PropertyName("Level")
     val level: String = "",
-) {
-    constructor() : this(
-        title = "",
-        type = "",
-        description = "",
-        bodyPart = "",
-        equipment = "",
-    )
-}
+)
 
 fun ExerciseQueryResource.toExerciseResource(): ExerciseResource = ExerciseResource(
     title = this.title,
