@@ -37,15 +37,14 @@ class WorkoutLogViewModel @Inject constructor(
     val workoutFeedState: StateFlow<WorkoutFeedUiState> =
         refreshTrigger.onStart { emit(Unit) }
             .flatMapLatest {
-                isRefreshing = true
-
                 workoutRepository.getLoggedWorkouts()
                     .map(WorkoutFeedUiState::Success)
+                    .onStart{ isRefreshing = true }
+                    .catch { WorkoutFeedUiState.Error }
                     .onCompletion {
                         Log.d("WorkoutLogViewModel", "Workout feed refreshed")
                         isRefreshing = false
                     }
-                    .catch { WorkoutFeedUiState.Error }
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
