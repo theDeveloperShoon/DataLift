@@ -61,20 +61,20 @@ class FeedViewModel @Inject constructor(
         return !(index != -1 && !post.likes.contains(uid))
     }
 
-        fun removeLike(post: Mpost) {
-            postRepo.removeLike(uid, post)
-        }
+    fun removeLike(post: Mpost) {
+        postRepo.removeLike(uid, post)
+    }
 
-        fun updateCurrentViewedPost(postID: String, uid: String) {
-            postRepo.getPost(uid, postID) { post ->
-                _currentPost.value = post
-            }
+    fun updateCurrentViewedPost(postID: String, uid: String) {
+        postRepo.getPost(uid, postID) { post ->
+            _currentPost.value = post
         }
+    }
 
-        fun getPosts() {
-            postRepo.getPosts(uid) { posts ->
-                _posts.value = posts
-            }
+    fun getPosts() {
+        postRepo.getPosts(uid) { posts ->
+            _posts.value = posts
         }
+    }
 
 }
