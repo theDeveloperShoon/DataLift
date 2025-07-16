@@ -209,21 +209,7 @@ class SignUpViewModel : ViewModel() {
         val userId = auth.currentUser?.uid
         val weightList = mutableListOf<userWeights>()
         weightList.add(userWeights(Timestamp.now(), weight.toDouble()))
-        /**val user = Muser(
-            uid = userId.toString(),
-            uname = uname,
-            email = email,
-            name = name,
-            gender = gender,
-            height = height,
-            weight = weight,
-            privacy = privacy,
-            imperial = imperial,
-            dob = Timestamp(dob),
-            workouts = mutableListOf<String>(),
-            friends = mutableListOf<String>(),
-            weights = weightList
-        ).toMap()**/
+
         _user.value = user.value?.copy(uid = userId.toString())
         _user.value = user.value?.copy(weights = weightList)
         Log.d("Firebase", "$user")
