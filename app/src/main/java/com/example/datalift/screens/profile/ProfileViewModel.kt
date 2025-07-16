@@ -33,8 +33,6 @@ class ProfileViewModel @Inject constructor(
     private val workoutRepo: WorkoutRepository2,
     private val analysisRepo: AnalysisRepository
 ) : ViewModel() {
-//    private var auth: FirebaseAuth = Firebase.auth
-//    private val uid: String = auth.currentUser?.uid.toString()
 
     private val profile = savedStateHandle.toRoute<ProfileDetail>()
 

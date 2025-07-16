@@ -21,9 +21,6 @@ class SignUpViewModel : ViewModel() {
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    private val _loading = MutableStateFlow(false)
-    val loading: StateFlow<Boolean> get() = _loading
-
     private val _user = MutableStateFlow<Muser?>(Muser())
     val user: StateFlow<Muser?> get() = _user
 
@@ -82,7 +79,7 @@ class SignUpViewModel : ViewModel() {
         _user.value = _user.value?.copy(name = newName)
         name = newName
     }
-//----------------------------------------------------------------
+
     val updateWeight: (String) -> Unit = { newWeight ->
         if(newWeight.matches(weightRegex)){
             if(newWeight.isNotEmpty()) {
@@ -182,21 +179,17 @@ class SignUpViewModel : ViewModel() {
      * @see createUser
      */
     fun createDBUser(callback: () -> Unit) {
-        if (!_loading.value) {
-            _loading.value = true
-            auth.createUserWithEmailAndPassword(user.value?.email!!, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        //val uname = task.result?.user?.email?.split('@')?.get(0).toString()
-                        createUser()
-                        sendEmailVerification()
-                        callback()
-                    } else {
-                        _errorMessage.value = "failed to create user"
-                    }
-                    _loading.value = false
+        auth.createUserWithEmailAndPassword(user.value?.email!!, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //val uname = task.result?.user?.email?.split('@')?.get(0).toString()
+                    createUser()
+                    sendEmailVerification()
+                    callback()
+                } else {
+                    _errorMessage.value = "failed to create user"
                 }
-        }
+            }
     }
 
 
@@ -205,7 +198,6 @@ class SignUpViewModel : ViewModel() {
      *
      */
     private fun createUser(){
-
         val userId = auth.currentUser?.uid
         val weightList = mutableListOf<userWeights>()
         weightList.add(userWeights(Timestamp.now(), weight.toDouble()))
@@ -232,7 +224,6 @@ class SignUpViewModel : ViewModel() {
             } else {
                 _errorMessage.value = "Failed to send verification email: ${task.exception?.message}"
             }
-            _loading.value = false
         }
     }
 
