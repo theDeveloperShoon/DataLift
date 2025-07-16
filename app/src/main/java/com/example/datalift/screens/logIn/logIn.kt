@@ -40,10 +40,10 @@ fun LoginFeatures(
     navigateToAccountCreation: () -> Unit,
     navigateToHome: () -> Unit,
     loginUser: (String, String) -> Unit,
-    signinUser: () -> Unit,
+    signInUser: () -> Unit,
     errorMessage: String?,
     actionMessage: String?,
-    loggedin: Boolean,
+    loggedIn: Boolean,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     snackbarDisplayed: Boolean,
     closeSnackbar: () -> Unit,
@@ -82,8 +82,8 @@ fun LoginFeatures(
             hasErrors = loginUiState.hasErrors,
             loginUser = {
                 loginUser(loginUiState.username, loginUiState.password)
-                if (loggedin) {
-                    signinUser()
+                if (loggedIn) {
+                    signInUser()
                     navigateToHome()
                 }
             }
@@ -92,8 +92,8 @@ fun LoginFeatures(
         Button(
             onClick = {
                 loginUser(loginUiState.username, loginUiState.password)
-                if(loggedin){
-                    signinUser()
+                if(loggedIn){
+                    signInUser()
                     navigateToHome()
                 }
             },
@@ -106,8 +106,8 @@ fun LoginFeatures(
             Text("Account Creation")
         }
         Spacer(Modifier.padding(8.dp))
-        if(loggedin){
-            signinUser()
+        if(loggedIn){
+            signInUser()
             navigateToHome()
         }
     }
@@ -155,12 +155,12 @@ fun LoginFields(
 
 @Composable
 fun LoginScreen(
+    modifier: Modifier = Modifier,
     logInViewModel: LogInViewModel = viewModel(),
     navigateToAccountCreation: () -> Unit,
-    signinUser: () -> Unit,
+    signInUser: () -> Unit,
     navigateToHome: () -> Unit,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
-    modifier: Modifier = Modifier
+    onShowSnackbar: suspend (String, String?) -> Boolean
 ){
     val loginUiState by logInViewModel.uiState.collectAsStateWithLifecycle()
     Column(
@@ -180,10 +180,10 @@ fun LoginScreen(
             navigateToAccountCreation = navigateToAccountCreation,
             navigateToHome = navigateToHome,
             loginUser = logInViewModel::loginUser,  // Pass the login method
-            signinUser = signinUser,
+            signInUser = signInUser,
             errorMessage = logInViewModel.errorMessage.collectAsState().value, // Pass error message
             actionMessage = logInViewModel.actionMessage.collectAsState().value,
-            loggedin = logInViewModel.loggedIn.collectAsState().value,
+            loggedIn = logInViewModel.loggedIn.collectAsState().value,
             onShowSnackbar = onShowSnackbar,
             snackbarDisplayed = logInViewModel.snackbarDisplayed,
             closeSnackbar = logInViewModel::closeSnackbar,
