@@ -1,5 +1,6 @@
 package com.datalift.logging
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -41,6 +42,7 @@ class WorkoutLogViewModel @Inject constructor(
                 workoutRepository.getLoggedWorkouts()
                     .map(WorkoutFeedUiState::Success)
                     .onCompletion {
+                        Log.d("WorkoutLogViewModel", "Workout feed refreshed")
                         isRefreshing = false
                     }
                     .catch { WorkoutFeedUiState.Error }

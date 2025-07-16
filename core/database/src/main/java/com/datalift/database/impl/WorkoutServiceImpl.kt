@@ -28,6 +28,7 @@ class WorkoutServiceImpl @Inject constructor(
                 .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { snapShot ->
+                    Log.d("WorkoutService","Workouts List start")
                     val workoutList = mutableListOf<WorkoutResource>()
                     for (document in snapShot.documents) {
                         val workout = document.toObject<WorkoutResource>()
@@ -35,8 +36,10 @@ class WorkoutServiceImpl @Inject constructor(
                             workoutList.add(workout)
                         }
                     }
+                    Log.d("WorkoutService","Workouts List sent")
                     trySend(workoutList.toList())
                 }.addOnFailureListener {
+                    Log.d("WorkoutService","Failure")
                    cancel("Failed to retrieve")
                 }
         }
