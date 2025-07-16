@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -21,7 +22,16 @@ fun LazyListScope.workoutFeed(
     onWorkoutDelete: (String) -> Unit,
 ){
     when (feedState) {
-        WorkoutFeedUiState.Error -> Unit // TODO: Change to provide an error
+        WorkoutFeedUiState.Error -> {
+            item {
+                Box(
+                    modifier = Modifier.fillParentMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Error loading workouts")
+                }
+            }
+        }
         WorkoutFeedUiState.Loading -> {
             item {
                 Box(
