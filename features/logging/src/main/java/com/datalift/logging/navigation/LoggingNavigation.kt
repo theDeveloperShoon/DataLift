@@ -1,5 +1,6 @@
 package com.datalift.logging.navigation
 
+import android.util.Log
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -117,9 +118,10 @@ fun NavGraphBuilder.loggingGraph(
             ExerciseSearchScreen(
                 navUp = navUp,
                 onSaveExercise = { exercise ->
+                    Log.d("Logging Graph", "Saving exercise: $exercise")
                     navigateToExerciseLogging(
                         exercise.title,
-                        exercise.bodyPart
+                        exercise.bodyPart,
                     )
                 },
                 exerciseViewModel = searchViewModel
