@@ -46,7 +46,12 @@ fun NavController.navigateToExerciseSearch() =
     navigate(route = ExerciseSearchRoute)
 
 fun NavController.navigateToExerciseLogging(name: String, bodyPart: String) =
-    navigate(route = ExerciseLoggingRoute(name, bodyPart))
+    navigate(
+        route = ExerciseLoggingRoute(
+            name = name,
+            bodyPart = bodyPart
+        )
+    )
 
 fun NavController.popBackToAddWorkout() =
     popBackStack(route = CreateWorkoutRoute, inclusive = false)
@@ -135,7 +140,7 @@ fun NavGraphBuilder.loggingGraph(
 
             val savedStateHandle = parentEntry.savedStateHandle
 
-            val addExerciseViewModel: AddExerciseViewModel = hiltViewModel(parentEntry)
+            val addExerciseViewModel: AddExerciseViewModel = hiltViewModel()
 
             AddExerciseScreen(
                 navBack = navUp,
