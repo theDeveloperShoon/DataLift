@@ -53,6 +53,19 @@ class AddExerciseViewModel @Inject constructor(
         }
     }
 
+    fun updateReps(setID: String, reps: Long){
+        _uiState.update { currentState ->
+            val updatedSets = currentState.sets.map {
+                if (it.id == setID) {
+                    it.copy(reps = reps)
+                } else {
+                    it
+                }
+            }
+            currentState.copy(sets = updatedSets)
+        }
+    }
+
     fun addSet(){
         _uiState.update { currentState ->
             val newSet = ExerciseSetDraft(
