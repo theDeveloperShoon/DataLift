@@ -70,6 +70,7 @@ internal fun AddExerciseScreen(
             saveExercise(uiState.convertToExerciseDraft())
         },
         addSet = viewModel::addSet,
+        updateReps = viewModel::updateReps,
         updateSetWeight = viewModel::updateSetWeight,
         updateSetWeightDecimal = viewModel::updateSetWeightDecimal,
         removeSet = viewModel::removeSet,
@@ -84,6 +85,7 @@ internal fun AddExerciseScreen(
     navBack: () -> Unit,
     saveExercise: () -> Unit,
     addSet: () -> Unit,
+    updateReps: (String, Long) -> Unit,
     updateSetWeight: (String, Int) -> Unit,
     updateSetWeightDecimal: (String, Int) -> Unit,
     removeSet: (String) -> Unit,
@@ -124,6 +126,7 @@ internal fun AddExerciseScreen(
                 addSet = addSet,
                 removeSet = removeSet,
                 sets = sets,
+                updateReps = updateReps,
                 updateSetWeight = updateSetWeight,
                 updateSetWeightDecimal = updateSetWeightDecimal
             )
@@ -134,6 +137,7 @@ internal fun AddExerciseScreen(
 @Composable
 private fun SetsList(
     addSet: () -> Unit,
+    updateReps: (String, Long) -> Unit,
     updateSetWeight: (String, Int) -> Unit,
     updateSetWeightDecimal: (String, Int) -> Unit,
     removeSet: (String) -> Unit,
@@ -152,7 +156,9 @@ private fun SetsList(
                 },
                 setNumber = index + 1,
                 reps = set.reps,
-                changeReps = {},
+                changeReps = { newReps ->
+                    updateReps(set.id, newReps)
+                },
                 deleteSet = { removeSet(set.id) },
                 weightString = set.formattedWeightString(),
                 changeWeightWhole = { newWholeWeight ->
@@ -325,6 +331,7 @@ private fun SetsListPreview(
             sets = sets,
             addSet = {},
             removeSet = {},
+            updateReps = {_, _ ->},
             updateSetWeight = {_, _ -> },
             updateSetWeightDecimal = {_, _ ->},
         )
@@ -345,6 +352,7 @@ private fun AddExerciseScreenPreview(
             removeSet = {},
             sets = workouts[0].exercises[0].sets.map { it.toExerciseSetDraft() },
             saveExercise = {},
+            updateReps = {_, _ ->},
             updateSetWeight = {_, _ ->},
             updateSetWeightDecimal = {_,_ ->}
         )
