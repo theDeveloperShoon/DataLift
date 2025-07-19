@@ -58,7 +58,6 @@ fun DataliftVerticalScrollPicker(
             .distinctUntilChanged()
             .collect {
                 onIndexChange(it)
-//                state.currentIndex = it + state.visibleItemCount / 2
             }
     }
 
