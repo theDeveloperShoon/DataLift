@@ -42,11 +42,13 @@ fun VerticalNumberPicker(
 ){
     val scope = rememberCoroutineScope()
 
-    val scrollState = AmbiguousScrollState(
-        itemCount = values.size,
-        initialIndex = 0,
-        visibleItemCount = 5
-    )
+    val scrollState = remember {
+        AmbiguousScrollState(
+            itemCount = values.size,
+            initialIndex = values.indexOf(values.first()),
+            visibleItemCount = 5
+        )
+    }
 
     val textStyle = TextStyle(
         fontSize = 40.sp,
@@ -77,6 +79,10 @@ fun VerticalNumberPicker(
 //                text = values[index].toString(),
 //                fontWeight = FontWeight.Bold
 //            )
+        },
+        onIndexChange = { index ->
+            onValueChange(values[index])
+            scrollState.currentIndex = index
         },
         inactiveItem = { index ->
             Text(

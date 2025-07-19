@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 fun DataliftVerticalScrollPicker(
     modifier: Modifier = Modifier,
     state: AmbiguousScrollState,
+    onIndexChange: (Int) -> Unit,
     inactiveItem: @Composable (Int) -> Unit,
     activeItem: @Composable (Int) -> Unit,
 ){
@@ -56,7 +57,8 @@ fun DataliftVerticalScrollPicker(
         snapshotFlow { state.listState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect {
-                state.currentIndex = it + state.visibleItemCount / 2
+                onIndexChange(it)
+//                state.currentIndex = it + state.visibleItemCount / 2
             }
     }
 
