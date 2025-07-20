@@ -20,6 +20,11 @@ data class Exercise(
     val bodyPart: String,
     val sets: List<ExerciseSet>,
 ){
+    constructor() : this(
+        name = "",
+        bodyPart = "",
+        sets = emptyList()
+    )
     constructor(exerciseResource: ExerciseResource) : this(
         name = exerciseResource.title,
         bodyPart = exerciseResource.bodyPart,
@@ -41,7 +46,12 @@ data class Exercise(
 data class ExerciseSet(
     val reps: Long,
     val weight: Double
-)
+){
+    constructor(): this(
+        reps = 0,
+        weight = 0.0
+    )
+}
 
 enum class MuscleGroup(val displayName: String) {
     Cardio("Cardio"),

@@ -2,7 +2,10 @@ package com.datalift.database.impl
 
 import android.util.Log
 import com.datalift.database.model.ExerciseQueryResource
+import com.datalift.database.model.FirestoreWorkoutResource
 import com.datalift.database.model.toExerciseResource
+import com.datalift.database.model.toFirestoreWorkoutResource
+import com.datalift.database.model.toWorkoutResource
 import com.datalift.database.service.AccountService
 import com.datalift.database.service.WorkoutService
 import com.datalift.model.data.ExerciseResource
@@ -34,9 +37,9 @@ class WorkoutServiceImpl @Inject constructor(
                     Log.d("WorkoutService","Workouts List start")
                     val workoutList = mutableListOf<WorkoutResource>()
                     for (document in snapShot.documents) {
-                        val workout = document.toObject<WorkoutResource>()
+                        val workout = document.toObject<FirestoreWorkoutResource>()
                         if (workout != null) {
-                            workoutList.add(workout)
+                            workoutList.add(workout.toWorkoutResource())
                         }
                     }
                     Log.d("WorkoutService","Workouts List sent")
@@ -59,15 +62,18 @@ class WorkoutServiceImpl @Inject constructor(
                 .document(workoutId)
                 .get()
                 .addOnSuccessListener {
-                    val workout = it.toObject<WorkoutResource>()
+                    val workout = it.toObject<FirestoreWorkoutResource>()
                     if (workout != null) {
-                        trySend(workout)
+                        trySend(workout.toWorkoutResource())
+                        channel.close()
                     } else {
                         cancel("Failed to parse workout data")
                     }
                 }.addOnFailureListener {
                     cancel("Failed to get workout")
                 }
+
+            awaitClose { Log.d("WorkoutService","Closed") }
         }
     }
 
@@ -121,7 +127,7 @@ class WorkoutServiceImpl @Inject constructor(
                 listOf("Unspecified")
             },
             exercises = workout.exercises
-        )
+        ).toFirestoreWorkoutResource()
 
         firestore.collection("Users")
             .document(auth.currentUserId)
@@ -143,7 +149,7 @@ class WorkoutServiceImpl @Inject constructor(
             .document(auth.currentUserId)
             .collection("Workouts")
             .document(workout.workoutId)
-            .set(workout)
+            .set(workout.toFirestoreWorkoutResource())
             .await()
     }
 
