@@ -43,10 +43,12 @@ data class Exercise(
     fun getRepsCount() : Long = sets.sumOf { it.reps }
 }
 
+@Suppress("unused")
 data class ExerciseSet(
     val reps: Long,
     val weight: Double
 ){
+    // Constructor is used by firebase when de-serializing the database
     constructor(): this(
         reps = 0,
         weight = 0.0
