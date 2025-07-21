@@ -209,11 +209,11 @@ class WorkoutViewModel @Inject constructor(
         if(!_loading.value) {
             _loading.value = true
             try{
-                workoutRepo.createNewWorkout(oRM(workout), uid){ workout ->
+                workoutRepo.createNewWorkout(oRM(workout), uid){ createdWorkout ->
                     if(addPost) {
                         userRepo.getUser(uid) { user ->
                             Log.d("Firebase", "User found: posting")
-                            val post = Mpost("", Timestamp.now(), workout, user, title, body)
+                            val post = Mpost("", Timestamp.now(), createdWorkout, user, title, body)
                             postRepo.addPost(uid, post)
                             _loading.value = false
                         }

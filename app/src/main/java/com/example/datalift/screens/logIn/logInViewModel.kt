@@ -9,12 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import com.example.datalift.model.Muser
-import com.example.datalift.screens.analysis.analysisViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -154,10 +152,6 @@ class LogInViewModel : ViewModel() {
                     _passwordReset.value = false
                 }
             }
-    }
-
-    fun userLogged(){
-        _loggedIn.value = false
     }
 }
 
