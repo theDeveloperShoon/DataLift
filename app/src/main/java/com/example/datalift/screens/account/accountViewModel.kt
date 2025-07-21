@@ -1,5 +1,6 @@
 package com.example.datalift.screens.account
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class accountViewModel: ViewModel() {
+class AccountViewModel: ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val uid: String = auth.currentUser?.uid.toString()
@@ -31,10 +32,6 @@ class accountViewModel: ViewModel() {
     private val _altUser = MutableStateFlow<Muser?>(null)
     val altUser: StateFlow<Muser?> = _altUser
 
-
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
-
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
@@ -44,8 +41,6 @@ class accountViewModel: ViewModel() {
         }
 
     }
-
-
 
     fun changePrivacy(privacy: Boolean){
         userRepo.changePrivacy(uid, privacy)
@@ -87,7 +82,7 @@ class accountViewModel: ViewModel() {
                 _loading.value = false
             }
             .addOnFailureListener{
-                _errorMessage.value = "Failed to update weight"
+                Log.d("Firebase", "Failed to update weight")
                 _loading.value = false
             }
 
