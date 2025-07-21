@@ -335,7 +335,6 @@ internal fun AnalysisScreen(
     // Search Exercise Dialog
     StatelessSearchExerciseDialog(
         query = exerciseUiState.query,
-        changeQuery = updateQuery,
         isVisible = exerciseUiState.dialogDisplayed,
         onDismiss = { updateDisplays(false, false) },
         onSelectExercise = { selectedExercise ->

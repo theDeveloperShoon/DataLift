@@ -166,12 +166,11 @@ fun WorkoutDetailsScreen(
 
         if (isAddSetVisible) {
             AddSetDialog(
-                workoutViewModel = workoutViewModel,
-                onDismiss = { isAddSetVisible = false },
                 onAddSet = { newSet ->
                     selectedExercise?.sets = selectedExercise?.sets?.plus(newSet)!!
                     isAddSetVisible = false
                 },
+                workoutViewModel = workoutViewModel,
                 modifier = Modifier.fillMaxHeight(0.5F)
             )
             saveWorkout = false
@@ -350,12 +349,11 @@ fun WorkoutDetailsEditScreen(
 
         if (isAddSetVisible) {
             AddSetDialog(
-                workoutViewModel = workoutViewModel,
-                onDismiss = { isAddSetVisible = false },
                 onAddSet = { newSet ->
                     selectedExercise?.sets = selectedExercise?.sets?.plus(newSet)!!
                     isAddSetVisible = false
                 },
+                workoutViewModel = workoutViewModel,
                 modifier = Modifier.fillMaxHeight(0.5F)
             )
             saveWorkout = false
@@ -439,7 +437,6 @@ fun CreateSetDialog(
 
 @Composable
 fun AddSetDialog(
-    onDismiss: () -> Unit,
     onAddSet: (Mset) -> Unit,
     workoutViewModel: WorkoutViewModel,
     modifier: Modifier = Modifier,
@@ -573,7 +570,6 @@ fun WorkoutDetailsScreenPreview() {
 fun AddSetDialogPreview() {
     DataliftTheme {
         AddSetDialog(
-            onDismiss = {},
             onAddSet = {},
             workoutViewModel = viewModel(), // Provide the necessary ViewModel
             modifier = Modifier.fillMaxSize()

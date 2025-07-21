@@ -222,12 +222,8 @@ fun NavGraphBuilder.workoutGraph(
 
             val workoutViewModel: WorkoutViewModel = hiltViewModel(parentEntry)
 
-
             WorkoutListScreen(
                 workoutViewModel = workoutViewModel,
-                onWorkoutClick = navController::navigateToWorkoutDetail,
-                onWorkoutEditClick = navController::navigateToWorkoutDetailEdit,
-//                navUp = { navController.navigateUp() },
                 navNext = { navController.navigate(Screens.WorkoutDetails.name) }
             )
         }
@@ -242,9 +238,9 @@ fun NavGraphBuilder.workoutGraph(
             val isImperial = workoutViewModel.getUnitSystem()
             workoutViewModel.getWorkout(workoutDetail.id)
             val workout = workoutViewModel.workout.collectAsStateWithLifecycle().value
+
             WorkoutScreen(
                 workout = workout,
-                navUp = { navController.navigateUp() },
                 isImperial = isImperial
             )
         }

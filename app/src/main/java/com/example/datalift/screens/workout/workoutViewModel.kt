@@ -7,33 +7,23 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.datalift.data.repository.PostRepositoryTwo
 import com.example.datalift.data.repository.WorkoutRepository2
-
-//data models
 import com.example.datalift.model.ExerciseItem
 import com.example.datalift.model.Mexercise
-import com.example.datalift.model.Mworkout
-import com.example.datalift.model.Mset
-import com.example.datalift.model.Muser
 import com.example.datalift.model.Mpost
-
-//testing imports remove when done
+import com.example.datalift.model.Mset
+import com.example.datalift.model.Mworkout
 import com.example.datalift.model.userRepo
-
-//Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
-
-//Compose
-
-
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+
 
 @HiltViewModel
 class WorkoutViewModel @Inject constructor(
@@ -49,8 +39,6 @@ class WorkoutViewModel @Inject constructor(
     private var auth: FirebaseAuth = Firebase.auth
     private val uid: String = auth.currentUser?.uid.toString()
 
-//    //testing repos remove when done
-//    private val challengeRepo = challengeRepo()
 
     private val _dialogUiState = MutableStateFlow(WorkoutDialogUiState())
     val dialogUiState: StateFlow<WorkoutDialogUiState> = _dialogUiState.asStateFlow()
@@ -154,13 +142,6 @@ class WorkoutViewModel @Inject constructor(
 
     var addPost by mutableStateOf(false)
 
-    /*init {
-        if (!_workoutFetched.value) {
-            getWorkouts()
-            _workoutFetched.value = true
-        }
-    }*/
-
     val updateWeight: (String) -> Unit = { newWeight ->
         if(newWeight.matches(weightRegex)){
             if(newWeight.isNotEmpty()) {
@@ -199,15 +180,6 @@ class WorkoutViewModel @Inject constructor(
     fun add(item: Mworkout){
         _workouts.value += item
     }
-
-
-//    fun getWorkoutList() = List(size = 10) {
-//        i -> Mworkout("Workout #$i",
-//        date = Timestamp.now(),
-//        "Back",
-//        "temp$i",
-//        emptyList())
-//    }
 
 
     /**

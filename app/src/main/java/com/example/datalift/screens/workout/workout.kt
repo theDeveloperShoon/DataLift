@@ -3,7 +3,6 @@ package com.example.datalift.screens.workout
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,12 +14,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
@@ -46,8 +42,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -56,7 +50,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.datalift.designsystem.theme.DataliftTheme
-import com.example.datalift.R
 import com.example.datalift.model.Mexercise
 import com.example.datalift.model.Mset
 import com.example.datalift.model.Mworkout
@@ -70,7 +63,6 @@ import com.example.datalift.ui.components.StatelessDataliftTwoButtonDialog
 @Composable
 fun StatelessSearchExerciseDialog(
     query: String,
-    changeQuery: (String) -> Unit,
     isVisible: Boolean,
     onDismiss: () -> Unit,
     onSelectExercise: (Mexercise) -> Unit,
@@ -96,35 +88,7 @@ fun StatelessSearchExerciseDialog(
         isVisible = isVisible,
         onDismissRequest = onDismiss,
     ) {
-        Column(modifier = Modifier.fillMaxHeight(0.8f)) {
-            OutlinedTextField(
-                value = query,
-                onValueChange = changeQuery,
-                label = { Text("Search Exercise") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Text(text = "Search results:")
-
-            // Show search results
-            LazyColumn {
-                items(exercises) { exercise ->
-                    Text(
-                        text = exercise.title,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                val exer = Mexercise(
-                                    name = exercise.title,
-                                    exercise = exercise,
-                                    sets = emptyList()
-                                )
-                                onSelectExercise(exer) // Select an exercise and add it to the workout
-                            }
-                            .padding(8.dp)
-                    )
-                }
-            }
-        }
+        Text(text = "Search results:")
     }
 }
 
@@ -136,6 +100,7 @@ fun SearchExerciseDialog(
 ) {
     var query by remember { mutableStateOf("") }
     val exercises = workoutViewModel.exercises.collectAsState().value
+
     // Search query changes trigger fetching exercises
     LaunchedEffect(query) {
         val handler = Handler(Looper.getMainLooper())
@@ -226,11 +191,9 @@ fun WorkoutDialog(
     isVisible: Boolean,
     onDismiss: () -> Unit,
     onSave: (String, String) -> Unit,
-    workoutViewModel: WorkoutViewModel = hiltViewModel(),
 ) {
     var workoutName by remember { mutableStateOf("") }
     var selectedMuscleGroup by remember { mutableStateOf("") }
-    var workout = workoutViewModel.workout.collectAsState().value
 
     val muscleGroups = listOf("Push", "Pull", "Legs", "Chest", "Arms", "Core", "Full Body")
 
@@ -386,10 +349,7 @@ fun WorkoutList(
 fun WorkoutListScreen(
     modifier: Modifier = Modifier,
     workoutViewModel: WorkoutViewModel = hiltViewModel(),
-    onWorkoutClick: (String) -> Unit,
-    onWorkoutEditClick: (String) -> Unit,
     navNext: () -> Unit = {},
-//    navUp: () -> Unit = {}
 
 ){
     workoutViewModel.getWorkouts()
@@ -398,27 +358,6 @@ fun WorkoutListScreen(
     var isDialogVisible by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.padding(8.dp)){
-        WorkoutList(
-            list = workoutViewModel.workouts.collectAsState().value,
-            onWorkoutClick = onWorkoutClick,
-            onWorkoutEditClick = onWorkoutEditClick,
-            removeWorkout = { workout -> workoutViewModel.deleteWorkout(workout) },
-            modifier = modifier.fillMaxSize()
-        )
-        IconButton(
-            onClick = { isDialogVisible = true },
-            modifier = modifier
-                .padding(12.dp)
-                .clip(CircleShape)
-                .align(Alignment.BottomCenter)
-                .size(64.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.weight_plate),
-                contentDescription = null,
-                modifier.size(64.dp)
-            )
-        }
         WorkoutCreationDialog(
             isVisible = isDialogVisible,
             onDismiss = { isDialogVisible = false},
@@ -550,26 +489,11 @@ fun ExerciseCard(
 @Composable
 fun WorkoutScreen(
     workout: Mworkout?,
-    navUp: () -> Unit,
     isImperial: Boolean,
     modifier: Modifier = Modifier
 ){
     workout?.let {
         Column(modifier = modifier) {
-
-            Row {
-                IconButton(onClick = navUp) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Navigate Back"
-                    )
-                }
-                Text(
-                    text = workout.name,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }
-            HorizontalDivider(thickness = 2.dp)
             LazyColumn {
                 items(workout.exercises) { exercise ->
                     ExerciseCard(exercise, isImperial)
@@ -617,7 +541,6 @@ fun StatelessSearchExerciseDialogPreview() {
         Surface {
             StatelessSearchExerciseDialog(
                 query = "Push-up",
-                changeQuery = {},
                 isVisible = true,
                 onDismiss = {},
                 onSelectExercise = {}
@@ -727,7 +650,6 @@ fun WorkoutScreenPreview() {
                     name = "Test Workout",
                     exercises = testExerciseList()
                 ), isImperial = true,
-                navUp = {}
             )
         }
     }
