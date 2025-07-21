@@ -2,7 +2,6 @@ package com.example.datalift.screens.logIn
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -37,10 +36,8 @@ fun LoginFeatures(
     loginUiState: LoginUiState,
     changeUsername: (String) -> Unit,
     changePassword: (String) -> Unit,
-    navigateToAccountCreation: () -> Unit,
     navigateToHome: () -> Unit,
     loginUser: (String, String) -> Unit,
-    signInUser: () -> Unit,
     errorMessage: String?,
     actionMessage: String?,
     loggedIn: Boolean,
@@ -68,11 +65,6 @@ fun LoginFeatures(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Login",
-            modifier = modifier.padding(4.dp)
-        )
-
         LoginFields(
             usernameInput = loginUiState.username,
             passwordInput = loginUiState.password,
@@ -83,7 +75,6 @@ fun LoginFeatures(
             loginUser = {
                 loginUser(loginUiState.username, loginUiState.password)
                 if (loggedIn) {
-                    signInUser()
                     navigateToHome()
                 }
             }
@@ -93,7 +84,6 @@ fun LoginFeatures(
             onClick = {
                 loginUser(loginUiState.username, loginUiState.password)
                 if(loggedIn){
-                    signInUser()
                     navigateToHome()
                 }
             },
@@ -101,13 +91,7 @@ fun LoginFeatures(
         ){
             Text("Login")
         }
-        Spacer(Modifier.padding(8.dp))
-        Button(onClick = { navigateToAccountCreation()}){
-            Text("Account Creation")
-        }
-        Spacer(Modifier.padding(8.dp))
         if(loggedIn){
-            signInUser()
             navigateToHome()
         }
     }
@@ -157,8 +141,6 @@ fun LoginFields(
 fun LoginScreen(
     modifier: Modifier = Modifier,
     logInViewModel: LogInViewModel = viewModel(),
-    navigateToAccountCreation: () -> Unit,
-    signInUser: () -> Unit,
     navigateToHome: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean
 ){
@@ -177,10 +159,8 @@ fun LoginScreen(
             loginUiState = loginUiState,
             changeUsername = logInViewModel.updateUsername,
             changePassword = logInViewModel.updatePassword,
-            navigateToAccountCreation = navigateToAccountCreation,
             navigateToHome = navigateToHome,
             loginUser = logInViewModel::loginUser,  // Pass the login method
-            signInUser = signInUser,
             errorMessage = logInViewModel.errorMessage.collectAsState().value, // Pass error message
             actionMessage = logInViewModel.actionMessage.collectAsState().value,
             loggedIn = logInViewModel.loggedIn.collectAsState().value,

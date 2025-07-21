@@ -119,9 +119,6 @@ fun NavGraphBuilder.loginScreen(
 ) {
     composable<LoginRoute>{
         LoginScreen(
-            navigateToAccountCreation = {
-                navController.navigate(route = SignUpBaseRoute)
-            },
             navigateToHome = {
                 navController.navigate(route = FeedBaseRoute){
                     popUpTo<LoginRoute>{
@@ -130,8 +127,7 @@ fun NavGraphBuilder.loginScreen(
                     launchSingleTop = true
                 }
             },
-            onShowSnackbar = onShowSnackbar,
-            signInUser = loginUser
+            onShowSnackbar = onShowSnackbar
         )
     }
 }

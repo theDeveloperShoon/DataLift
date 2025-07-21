@@ -18,9 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class SignUpViewModel : ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth
 
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
-
     private val _user = MutableStateFlow<Muser?>(Muser())
     val user: StateFlow<Muser?> get() = _user
 
@@ -187,7 +184,7 @@ class SignUpViewModel : ViewModel() {
                     sendEmailVerification()
                     callback()
                 } else {
-                    _errorMessage.value = "failed to create user"
+                    Log.d("Firebase", "Failed to create user ${task.exception?.message}")
                 }
             }
     }
@@ -222,7 +219,7 @@ class SignUpViewModel : ViewModel() {
             if (task.isSuccessful) {
                 Log.d("Firebase", "Verification email sent.")
             } else {
-                _errorMessage.value = "Failed to send verification email: ${task.exception?.message}"
+                Log.d("Firebase", "Failed to send verification email.")
             }
         }
     }

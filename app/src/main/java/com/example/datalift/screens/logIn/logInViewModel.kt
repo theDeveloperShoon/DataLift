@@ -89,23 +89,12 @@ class LogInViewModel : ViewModel() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        var uid = auth.currentUser?.uid
-                        Log.d("Firebase", "Login success: ${task.result}")
                         if (auth.currentUser?.isEmailVerified == true) {
-                            Log.d("Firebase", "curr user ${auth.currentUser?.uid}")
-                            if (uid != null) {
                                 FirebaseFirestore.getInstance().collection("Users")
-                                    .document(uid)
+                                    .document(auth.uid.toString())
                                     .get()
                                     .addOnSuccessListener { snapshot ->
-                                        try {
-                                            val user = Muser.fromDocument(snapshot)
-                                            Log.d("Firebase", "User found: ${user.name}")
-                                            _loggedIn.value = true
-                                            _verPopup.value = false
-                                        } catch (e: Exception) {
-                                            Log.d("Firebase", "User not found: ${uid}")
-                                        }
+
                                     }.addOnFailureListener { e ->
                                         Log.d("Firebase", "reading failed: ${e.message}")
                                         _errorMessage.value = e.message
@@ -113,7 +102,6 @@ class LogInViewModel : ViewModel() {
                                         displaySnackbar()
                                         _uiState.update {newState -> newState.copy(hasErrors = true)}
                                     }
-                            }
                         } else {
                             _errorMessage.value = "Please verify your email before logging in."
                             _actionMessage.value = "Resend"
